@@ -52,10 +52,10 @@ input {
     background-color: #732743;
     color: #000;
     font-size: 25px;
-    min-width: 150px;
+    width: auto;
     height: auto;
-    margin-right: 40px;
-    margin-left: 40px;
+    /* margin-right: 40px;
+    margin-left: 40px; */
     transition: all 0.3s;
     border: #732743;
 }
@@ -86,116 +86,161 @@ input {
     font-size: 24px;
     color: #D9D9D9;
 }
-.nav-link{
+
+.nav-link {
     color: #000;
     transition: all 0.4s;
 }
-.nav-link:hover{
+
+.nav-link:hover {
     color: white;
 }
 
-.paginaAtual{
+.paginaAtual {
     color: white;
 }
 
 .navbarTitulo {
     font-size: 35px;
 }
-.navColapsada{
+
+.navColapsada {
     display: none;
 }
 
-.dropdown-item{
+.dropdown-item {
     background-color: #D93250;
     color: #000;
 }
-.dropdown-item:hover{
+
+.dropdown-item:hover {
     background-color: #732743;
     color: #D9D9D9;
 }
 
-.dropdown-menu{
-    padding-top:0;
-    padding-bottom:0;
+.dropdown-menu {
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
-.btnDropdown{
+.btnDropdown {
     color: #D9D9D9;
     background-color: #732743;
     border: none;
 }
 
-.btnDropdown:hover{
+.btnDropdown:hover {
     background-color: #D93250;
 }
 
 
+.menuLateral {
+    height: 100vh;
+    background-color: #D93250;
+    position: absolute;
+    z-index: 999;
+    transition: all .3s;
+    right: 0;
+    text-align: end;
+    padding-top: 15px;
+    padding-right: 40px;
+    padding-left: 20px;
+    font-size: 20px;
+}
+
+.showMenu {
+    display: block;
+}
+
+.fundo {
+    display: none;
+}
+
+.showFundo {
+    /* bottom: 0; */
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: #7070703a;
+    display: block;
+    z-index: 999;
+}
+
+
+
 /* Home page */
-.containerBuscar{
+.containerBuscar {
     margin: auto;
     margin-top: 100px;
     width: 40%;
 }
 
-.filmesPopulares{
+.filmesPopulares {
     margin-left: 30px;
 }
 
-.containerCard{
+.containerCard {
     margin-top: 50px;
     display: flex;
     justify-content: space-evenly;
     border-radius: 15px;
 }
 
-.card{
+.card {
     border: none;
+    padding: 20px;
     background-color: #030F26;
-    color:#D9D9D9;
+    color: #D9D9D9;
     cursor: pointer;
 }
 
 .card a {
-    color:#D9D9D9;
+    color: #D9D9D9;
+    transition: all .3s;
 }
 
+.card a:hover {
+    color: #D93250;
+}
 
 /* tela do filme */
-.tituloFilme{
+.tituloFilme {
     text-align: center;
     margin-top: 60px;
     margin-bottom: 60px;
 }
-.containerFilme{
+
+.containerFilme {
     text-align: center;
     align-items: center;
     margin: auto;
 }
 
-.descricaoFilme{
+.descricaoFilme {
     margin-top: 30px;
-padding-left: 150px;
-padding-right: 150px;
+    padding-left: 150px;
+    padding-right: 150px;
 }
 
 
-.selecionar{
-height: 35px;
-background-color: #732743;
-color:#D9D9D9;
-border: none;
-margin-bottom: 20px;
-border-radius: 10px;
+.selecionar {
+    height: 35px;
+    background-color: #732743;
+    color: #D9D9D9;
+    border: none;
+    margin-bottom: 20px;
+    border-radius: 10px;
 }
 
-.comentario{
+.comentario {
     justify-content: space-between
 }
-.tituloComentario{
+
+.tituloComentario {
     margin-left: 70px;
 }
 
-.textoComentario{
+.textoComentario {
     border: none !important;
     background-color: #732743 !important;
     color: #D9D9D9 !important;
@@ -205,83 +250,44 @@ border-radius: 10px;
     border-radius: 20px;
 }
 
-.avaliacao{
+.avaliacao {
     font-weight: 400;
     font-weight: bold;
     margin-right: 20px;
 }
 
 
-/* Meus filmes */
-.tabelaFilmes{
-    vertical-align:baseline;
-    width: 80%;
-    margin: auto;
-    margin-bottom: 50px;
-    font-size: 20px;
-}
-.table th{    
-    text-align: center;
-    background-color: #030F26;
-    color: #ededed;
-    height: 30px;
-}
-
-.table td{
-    background-color: #030F26;
-    color:#D9D9D9;
-    height: 66px;
-
-}
-.filme{
-    margin-left: 20px;
-    color: #D93250;
-    transition: all 0.3s;
-}
-.filme:hover{
-    color: #ededed;
-}
-.avaliacao{
-    text-align: center;
-}
-
-.btnAcoes{
-    display: flex;
-    justify-content: space-evenly;
-}
-
-
 
 /* usuario */
-.dadoUsuarioContainer{
+.dadoUsuarioContainer {
     display: flex;
 }
 
-.dadoUsuario{
+.dadoUsuario {
     display: flex;
     font-size: 20px;
     width: auto;
     margin-left: 70px;
     align-items: center;
     max-height: 50px;
-    
+
 }
 
-.dadoUsuario span{
+.dadoUsuario span {
     background-color: #D93250;
     color: #ededed;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
-    padding: 10px 20px ;
+    padding: 10px 20px;
 }
 
-.dadoUsuario label{
+.dadoUsuario label {
     width: auto;
     background-color: #D9D9D9;
     border-top-right-radius: 10px;
-    padding: 10px 20px ;
+    padding: 10px 20px;
     border-bottom-right-radius: 10px;
-    color: #000; 
+    color: #000;
 }
 
 
@@ -290,82 +296,145 @@ border-radius: 10px;
 
 
 /* footer */
-.footerContainer{
-    margin-top:60px;
+.footerContainer {
+    margin-top: 60px;
     width: 100%;
     padding-top: 20px;
     padding-bottom: 20px;
     text-align: center;
     background-color: rgb(44, 44, 44);
 }
-.footerContainer a{
-    color:#D9D9D9;
-    
+
+.footerContainer a {
+    color: #D9D9D9;
+
+}
+
+.formulario {
+    width: 80%;
+    margin: auto;
 }
 
 
-@media only screen and (max-width: 991px){
 
-    .navColapsada{
+/* tabela */
+.containerTabela{
+    width: 85%;
+    margin: auto;
+}
+
+.cabesarioTabela{
+    height: 50px;
+    font-size: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+    border-bottom: solid 2px #ededed;
+    border-right: solid 1px #ededed;
+    color: #ededed;
+}
+.corpoTabela{
+    height: 50px;
+    text-align: center;
+    font-size: 22px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-bottom: solid #ededed 1px;
+    border-right: solid #ededed 1px;
+
+}
+.ultimaColuna{
+    border-right: none;
+}
+.nomeFilme{
+    color: #D93250;
+    transition: all 0.3s;
+}
+.nomeFilme:hover{
+    color: #ededed;
+}
+
+.btnAcoes{
+    margin: 10px;
+    font-size: 20px;
+}
+
+@media only screen and (max-width: 991px) {
+
+    .navColapsada {
         display: block;
         width: 20%;
     }
 
-    .container-fluid{
+    .container-fluid {
         width: 80%;
     }
 
-    .btnAcoes{
+    .btnAcoes {
         padding-bottom: 20px;
     }
-    .btnAcoes{
+
+    .btnAcoes {
         height: 66px;
         border-bottom: solid #ededed 2px;
         margin-left: 10px;
     }
 
-    .dadoUsuarioContainer{
+    .dadoUsuarioContainer {
         display: block;
     }
 
 
 
     /* registrar */
-    .containerRegistro{
+    .containerRegistro {
         display: block;
         width: 350px;
     }
 
 
 
+
+    .containerBuscar {
+        width: 60%;
+    }
+
+    .containerLogin {
+        width: 90%;
+    }
+
+
+}
+
+@media only screen and (max-width: 760px) {
     /* Home */
-    .containerCard{
+    .containerCard {
         display: block;
         text-align: center;
         margin: auto;
         margin-bottom: 30px;
-
+        padding: 35px;
         width: 80%;
     }
 
-    .card-text{
+    .card-text {
         font-size: 020px;
     }
 
-    .pesquisar{
+    .pesquisar {
         width: 100%;
-    }
-
-    .containerBuscar{
-        width: 60%;
     }
 }
 
-@media only screen and (max-width: 405px){
+@media only screen and (max-width: 405px) {
 
-    .navbar{
-        padding-left: 0px ;
-        padding-right: 10px ;
+    .navbar {
+        padding-left: 0px;
+        padding-right: 10px;
+    }
+
+    .botaoFormulario {
+        display: block;
     }
 
 }

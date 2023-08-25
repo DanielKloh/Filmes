@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    <?php
-    //Chama o header da tela
-    require_once("layout/header.php");
-    
-    ?>
+<?php
+//Chama o header da tela
+require_once("layout/header.php");
+
+?>
+
 <body>
 
     <?php
     //Chama a navbar
     require_once("layout/navbar.php");
-    
+
     ?>
 
 
@@ -18,56 +19,32 @@
 
     <h2 class="container mt-5 mb-5">Filmes que avaliei</h1>
 
-        <div class="container">
+        <div class="containerTabela">
 
-            <table class="table tabelaFilmes">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Filme</th>
-                        <th scope="col">Avaliação</th>
-                        <th scope="col">Açoes</th>
-                    </tr>
+            <table class="" >
+                <thead class="text-center">
+                    <th class="cabesarioTabela">#</th>
+                    <th class="cabesarioTabela">Nome</th>
+                    <th class="cabesarioTabela">Avaliação</th>
+                    <th class="cabesarioTabela ultimaColuna">Ação</th>
                 </thead>
-                <tbody class="table-group-divider">
+
+                <tbody>
                     <tr>
-                        <th scope="row">1</th>
-                        <td>
-                            <a href="Filme.html" class="filme">Batman arkan knigth</a>
-                        </td>
-                        <td class="avaliacao">Muito Bom</td>
-                        <td class="btnAcoes">
-                            <botton  class="btn btn-warning">Editar</botton>
-                            <button class="btn btn-danger" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">Deletar</button>
+                        <td class="corpoTabela"><strong>1</strong></td>
+                        <td class="corpoTabela"><a href="" class="nomeFilme">Batman cavaleiro das trevasBatman cavaleiro das trevasBatman cavaleiro das trevas  </a></td>
+                        <td class="corpoTabela">Muito Bom</td>
+                        <td class="corpoTabela ultimaColuna">
+                            <div class="d-flex">
+                                <button class="btn btn-warning btnAcoes">Editar</button>
+                                <button class="btn btn-danger btnAcoes">Deletar</button>
+                            </div>
                         </td>
                     </tr>
 
-                    <th scope="row">2</th>
-                    <td>
-                        <a href="" class="filme">Jacobossauros</a>
-                    </td>
-                    <td class="avaliacao">Muito ruim</td>
-                    <td class="btnAcoes">
-                        <button class="btn btn-warning">Editar</button>
-                        <button class="btn btn-danger">Deletar</button>
-                    </td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>
-                            <a href="" class="filme">Lery o Parasita</a>
-                        </td>
-                        <td class="avaliacao">Ruim</td>
-                        <td class="btnAcoes">
-                            <button class="btn btn-warning">Editar</button>
-                            <button class="btn btn-danger">Deletar</button>
-                        </td>
-
-                    </tr>
                 </tbody>
             </table>
+
         </div>
 
 
@@ -94,10 +71,10 @@
         </div>
 
         <?php
-//Chama o footer
-require_once("layout/footer.php");
+        //Chama o footer
+        require_once("layout/footer.php");
 
-?>
+        ?>
 
 </body>
 

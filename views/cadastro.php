@@ -54,8 +54,8 @@ require_once("layout/header.php");
 
             </div>
                 <div class="botaoFormulario">
-                    <a href="login.php" class="btn btn-primary">Tenho conta</button>
-                    <a href="Home.php" class="btn btn-primary">Cadastrar</a>
+                    <a href="login.php" class="btn btn-primary mb-3">Tenho conta</button>
+                    <a href="Home.php" class="btn btn-primary mb-3">Cadastrar</a>
                 </div>
         </form>
 

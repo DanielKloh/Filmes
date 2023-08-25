@@ -74,15 +74,12 @@ require_once("layout/header.php");
             <div class="d-flex comentario">
                 <h3>Carlos Ricardo</h3>
                 <p class="avaliacao">Muito Ruim</p>
-
             </div>
-            <div class=" textoComentario" placeholder="Comentario" style="height: 100px">
-                Ta maluco doido? Esse filme é a pior coisa que ja vi. Essa poluição audio visual me fez chorar de tão
+            <div class=" textoComentario">
+            Ta maluco doido? Esse filme é a pior coisa que ja vi. Essa poluição audio visual me fez chorar de tão
                 ruim que é. Quero meu dinheiro de volta e mais, quero a minhi dignindade.
             </div>
-
         </div>
-
 
 
         <?php

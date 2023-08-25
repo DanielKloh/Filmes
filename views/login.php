@@ -13,10 +13,10 @@ require_once("layout/header.php");
 
     <div class="containerLogin">
 
-        <form>
+        <form class="container containerLogin" >
             <div class="formulario">
                 <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
-                <div class="col-sm-12">
+                <div class="col-md-12">
                     <input type="email" class="form-control" id="inputEmail3">
                 </div>
             </div>
@@ -28,8 +28,8 @@ require_once("layout/header.php");
             </div>
 
             <div class="botaoFormulario">
-                <a href="cadastro.php" class="btn btn-primary">Cadastrar</a>
-                <a href="Home.php" class="btn btn-primary">Entrar</a>
+                <a href="cadastro.php" class="btn btn-primary mb-3">Cadastrar</a>
+                <a href="Home.php" class="btn btn-primary mb-3">Entrar</a>
             </div>
         </form>
 
