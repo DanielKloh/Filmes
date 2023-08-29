@@ -14,48 +14,48 @@ require_once("layout/header.php");
     <div class="containerRegistro">
 
         <!-- need-validation -->
-        <form class="row g-3  justify-content">
+        <form class="row g-3  justify-content needs-validation">
             <div class="col-md-5">
                 <label for="inputEmail4" class="form-label">Nome de Usuário</label>
-                <input type="text" class="form-control" id="inputEmail4" placeholder="Nome de Usuário*" >
+                <input type="text" class="form-control" id="inputEmail4" placeholder="Nome de Usuário*" required>
             </div>
             <div class="col-md-5">
                 <label for="inputPassword4" class="form-label">Email</label>
-                <input type="email" class="form-control" id="inputPassword4" placeholder="Email*" >
+                <input type="email" class="form-control" id="inputPassword4" placeholder="Email*" required>
             </div>
-            <div class="col-md-5">
+            <!-- <div class="col-md-5">
                 <label for="inputAddress" class="form-label">Senha</label>
-                <input type="password" class="form-control" id="inputAddress" placeholder="Senha*" >
-            </div>
+                <input type="password" class="form-control" id="inputAddress" placeholder="Senha*" required>
+            </div> -->
             <div class="col-md-5">
                 <label for="inputAddress2" class="form-label">Telefone</label>
-                <input type="text" class="form-control" id="inputAddress2" placeholder="Telefone*" >
+                <input type="text" class="form-control" id="inputAddress2" placeholder="Telefone*" required>
             </div>
             <div class="col-md-5">
                 <label for="inputCity" class="form-label">Data de Nascimento</label>
-                <input type="date" class="form-control" id="inputCity">
-            </div>
+                <input type="date" class="form-control" id="inputCity" required>
+            </div> 
 
             <div class="form-check form-check-inline col-md-5">
 
                 <p>Genero</p>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="genero" id="inlineRadio1" value="Mascolino">
+                    <input class="form-check-input" type="radio" name="genero" id="inlineRadio1" value="Mascolino" required>
                     <label class="form-check-label" for="inlineRadio1">Mascolino</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="genero" id="inlineRadio2" value="Feminino">
+                    <input class="form-check-input" type="radio" name="genero" id="inlineRadio2" value="Feminino" required>
                     <label class="form-check-label" for="inlineRadio2">Feminino</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="genero" id="inlineRadio3" value="Outro">
+                    <input class="form-check-input" type="radio" name="genero" id="inlineRadio3" value="Outro" required>
                     <label class="form-check-label" for="inlineRadio3">Outro</label>
                 </div>
 
 
             </div>
                 <div class="botaoFormulario">
-                    <a href="perfil.html" type="submit" class="btn btn-primary">Cancelar</a>
+                    <a href="perfil.php " type="submit" class="btn btn-primary">Cancelar</a>
                     <button type="submit" class="btn btn-primary">Editar</button>
                 </div>
         </form>

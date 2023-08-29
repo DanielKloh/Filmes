@@ -14,14 +14,11 @@ require_once("layout/header.php");
 
     ?>
 
-
-
-
     <h2 class="container mt-5 mb-5">Filmes que avaliei</h1>
 
         <div class="containerTabela">
 
-            <table class="" >
+            <!-- <table class="" >
                 <thead class="text-center">
                     <th class="cabesarioTabela">#</th>
                     <th class="cabesarioTabela">Nome</th>
@@ -32,7 +29,7 @@ require_once("layout/header.php");
                 <tbody>
                     <tr>
                         <td class="corpoTabela"><strong>1</strong></td>
-                        <td class="corpoTabela"><a href="" class="nomeFilme">Batman cavaleiro das trevasBatman cavaleiro das trevasBatman cavaleiro das trevas  </a></td>
+                        <td class="corpoTabela"><a href="" class="nomeFilme">Batman cavaleiro das trevas </a></td>
                         <td class="corpoTabela">Muito Bom</td>
                         <td class="corpoTabela ultimaColuna">
                             <div class="d-flex">
@@ -43,7 +40,33 @@ require_once("layout/header.php");
                     </tr>
 
                 </tbody>
-            </table>
+            </table> -->
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="cabesarioTabela" scope="col"> <strong>#<strong></th>
+                        <th class="cabesarioTabela" scope="col"> <strong>Nome<strong></th>
+                        <th class="cabesarioTabela" scope="col"> <strong>Avaliação<strong></th>
+                        <th class="cabesarioTabela ultimaColuna" scope="col"> <strong>Ações<strong></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="corpoTabela" scropt="row">1</td>
+                        <td class="corpoTabela"><a href="#" class="nomeFilme"> Batman o cavaleiro das trevas</a></td>
+                        <td class="corpoTabela">Muito Bom</td>
+                        <td class="corpoTabela ultimaColuna">
+                            <a href="#" class="btn btn-warning  edit-btn">Editar</a>
+                            <button class="btn btn-danger delete-btn">Deletar</button>
+                            
+                        </td> 
+                    </tr>
+                    
+                </tbody>
+        </table>
+
 
         </div>
 

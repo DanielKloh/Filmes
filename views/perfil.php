@@ -18,45 +18,48 @@ require_once("layout/header.php");
 
 
     <h2 class="container mt-5 mb-5">Minha conta</h1>
-        <div class="dadoUsuarioContainer">
 
-            <div class="dadoUsuario mb-5">
-                <span>Nome de Usuario</span>
-                <label>Daniel Kloh</label>
+        <div class="container">
+            <div class="dadoUsuarioContainer">
+
+                <div class="dadoUsuario mb-5">
+                    <span>Nome de Usuario</span>
+                    <label>Daniel Kloh</label>
+                </div>
+
+                <div class="dadoUsuario mb-5">
+                    <span>Email</span>
+                    <label>Danie.master@gmail.com</label>
+                </div>
+
+
             </div>
+            <div class="dadoUsuarioContainer">
+                <div class="dadoUsuario mb-5">
+                    <span>Telefone</span>
+                    <label>+51 940028922</label>
+                </div>
+                <div class="dadoUsuario mb-5">
+                    <span>Data de nascimento</span>
+                    <label>28/12/2004</label>
+                </div>
 
-            <div class="dadoUsuario mb-5">
-                <span>Email</span>
-                <label>Danie.master@gmail.com</label>
-            </div>
-
-
-        </div>
-        <div class="dadoUsuarioContainer">
-            <div class="dadoUsuario mb-5">
-                <span>Telefone</span>
-                <label>+51 940028922</label>
-            </div>
-            <div class="dadoUsuario mb-5">
-                <span>Data de nascimento</span>
-                <label>28/12/2004</label>
-            </div>
-
-            <div class="dadoUsuario mb-5">
-                <span>Genero</span>
-                <label>Mascolino</label>
+                <div class="dadoUsuario mb-5">
+                    <span>Genero</span>
+                    <label>Mascolino</label>
+                </div>
             </div>
         </div>
         <div class="botaoFormulario mb-5">
-            <a class="btn btn-primary" href="editarDados.html">Editar Dados</a>
-            <!-- <button type="submit" class="btn btn-primary">Alterar Senha</button> -->
+            <a class="btn btn-primary" href="editarDados.php">Editar Dados</a>
+            <a href="AlterarSenha.php" class="btn btn-primary">Alterar Senha</a>
         </div>
 
         <?php
-//Chama o footer
-require_once("layout/footer.php");
+        //Chama o footer
+        require_once("layout/footer.php");
 
-?>
+        ?>
 
 </body>
 

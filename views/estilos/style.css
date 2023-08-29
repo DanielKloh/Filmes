@@ -260,7 +260,7 @@ input {
 
 /* usuario */
 .dadoUsuarioContainer {
-    display: flex;
+display: flex;
 }
 
 .dadoUsuario {
@@ -318,49 +318,54 @@ input {
 
 
 /* tabela */
-.containerTabela{
+.containerTabela {
     width: 85%;
     margin: auto;
 }
 
-.cabesarioTabela{
-    height: 50px;
-    font-size: 30px;
+.cabesarioTabela {
+    font-size: 1.3em;
+
+    background-color: #030F26 !important;
+    color: #ededed !important;
     padding-left: 10px;
     padding-right: 10px;
     text-align: center;
-    border-bottom: solid 2px #ededed;
-    border-right: solid 1px #ededed;
-    color: #ededed;
+    border-bottom: solid #ededed 2px !important;
+    border-right: solid #ededed 1px;
 }
-.corpoTabela{
-    height: 50px;
+
+.corpoTabela {
+    font-size: 1.3em;
+
+    background-color: #030F26 !important;
+    color: #ededed !important;
     text-align: center;
-    font-size: 22px;
     padding-left: 10px;
     padding-right: 10px;
-    border-bottom: solid #ededed 1px;
+    /* border-bottom: solid #ededed 1px; */
     border-right: solid #ededed 1px;
 
 }
-.ultimaColuna{
+
+.ultimaColuna {
     border-right: none;
 }
-.nomeFilme{
+
+.nomeFilme {
     color: #D93250;
     transition: all 0.3s;
 }
-.nomeFilme:hover{
-    color: #ededed;
-}
 
-.btnAcoes{
-    margin: 10px;
-    font-size: 20px;
+.nomeFilme:hover {
+    color: #ededed;
 }
 
 @media only screen and (max-width: 991px) {
 
+    .cabesarioTabela, .corpoTabela{
+        font-size: .85em;
+    }
     .navColapsada {
         display: block;
         width: 20%;
@@ -407,6 +412,7 @@ input {
 }
 
 @media only screen and (max-width: 760px) {
+
     /* Home */
     .containerCard {
         display: block;
@@ -435,6 +441,26 @@ input {
 
     .botaoFormulario {
         display: block;
+    }
+}
+
+
+@media only screen and (max-width: 500px) {
+
+    .dadoUsuario {
+        margin: 10px;
+        font-size: 14px;
+        align-items: center;
+    }
+    
+    .dadoUsuario span {
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+    
+    .dadoUsuario label {
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
     }
 
 }
