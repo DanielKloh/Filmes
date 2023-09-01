@@ -16,24 +16,40 @@ require_once("layout/header.php");
     ?>
 
 
+<?php
 
-    <h2 class=" tituloFilme ">Batman o cavaleiro das trevas</h1>
 
-        <div class="containerFilme">
+// $filme = $_POST['dadosFilme'];
+// var_dump($filme);
 
-            <div class="">
-                <img style="width: 18rem"
-                    src="https://m.media-amazon.com/images/M/MV5BMTYwNjAyODIyMF5BMl5BanBnXkFtZTYwNDMwMDk2._V1_SX300.jpg"
-                    class="card-img-top" alt="capa do filme">
-            </div>
+// echo $filme->Poster;
+?>
 
-            <div class="descricaoFilme mb-5">
-                <p>Descrição: fjdsaflsadddddddd akjdfklsdjaf kjdsaifjslkçvj ijfglaoijkll jçkakflçj iah sajf e d quando
-                    issso aconontec eu me borro todo em tuod qunato e cnanto e deu de escrever assim dskjflsji jlçdjij
-                    dsk jkdjkdjlçfidjsk klasfçoa oji edeanoveo coisa seria aa n da pra para de escrever assim deu
-                    fsadkjfslfjs didsja pokldsjfir hgijdafoiuyh afufaf jgua fsaaaa acabou</p>
-            </div>
+<?php
+    
+    $dadosFilme = json_decode($_POST["dadosFilme"]);
+
+    var_dump($_POST["dadosFilme"]);
+
+    $filmeConteiner = '
+    <h2 class=" tituloFilme ">'.$dadosFilme->Title.'</h2>
+
+    <div class="containerFilme">
+
+        <div class="">
+            <img style="width: 18rem"
+                src="'.$dadosFilme->Poster.'"
+                class="card-img-top" alt="capa do filme" alt="'.$dadosFilme->Title.'">
         </div>
+
+        <div class="descricaoFilme mb-5">
+            <p>Descrição: '.$dadosFilme->Plot.'</p>
+        </div>
+    </div>';
+
+    echo $filmeConteiner;
+    ?>
+
 
 
         <h2 class="tituloComentario">Conmentarios</h2>
