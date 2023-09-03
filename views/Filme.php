@@ -26,20 +26,32 @@ require_once("layout/header.php");
 ?>
 
 <?php
-    
     $dadosFilme = json_decode($_POST["dadosFilme"]);
 
-    var_dump($_POST["dadosFilme"]);
+    function AdicionaAspasSimples($array) {
+
+            //Percorre o objeto substituindo as " ' " por " + "
+            foreach ($array as $propriedade => $valor) {
+                if (is_string($valor)) {
+                    $array->$propriedade = str_replace("+", "'", $valor);
+                }
+            }
+        
+        return $array;
+    }
+
+    //Formata os dados do filme com a sintaxe correta
+    $json = (AdicionaAspasSimples($dadosFilme));
 
     $filmeConteiner = '
-    <h2 class=" tituloFilme ">'.$dadosFilme->Title.'</h2>
+    <h2 class=" tituloFilme ">'.$json->Title.'</h2>
 
     <div class="containerFilme">
 
         <div class="">
             <img style="width: 18rem"
-                src="'.$dadosFilme->Poster.'"
-                class="card-img-top" alt="capa do filme" alt="'.$dadosFilme->Title.'">
+                src="'.$json->Poster.'"
+                class="card-img-top" alt="capa do filme" alt="'.$json->Title.'">
         </div>
 
         <div class="descricaoFilme mb-5">
