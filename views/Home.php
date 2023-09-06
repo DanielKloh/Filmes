@@ -12,7 +12,14 @@ require_once("layout/header.php");
     <?php
     //Chama a navbar
     require_once("layout/navbar.php");
-
+    
+    session_start();
+    if(isset($_SESSION["idUsuario"])){
+        echo $_SESSION["idUsuario"];
+    }
+    else{
+        echo "Deslogado";
+    }
     ?>
 
 

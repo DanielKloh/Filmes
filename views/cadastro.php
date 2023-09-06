@@ -4,7 +4,7 @@
 <?php
 //Chama o header da tela
 require_once("layout/header.php");
-
+include("../controller/conexao.php");
 ?>
 
 <body>
@@ -13,7 +13,7 @@ require_once("layout/header.php");
 
     <div class="containerRegistro">
 
-        <form class="row g-3 need-validation justify-content needs-validation">
+        <form class="row g-3 need-validation justify-content needs-validation" action="../controller/conexao.php">
             <div class="col-md-5">
                 <label for="inputEmail4" class="form-label">Nome de Usuário</label>
                 <input type="text" class="form-control" id="inputEmail4" placeholder="Nome de Usuário*" required>

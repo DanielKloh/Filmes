@@ -13,23 +13,24 @@ require_once("layout/header.php");
 
     <div class="containerLogin">
 
-        <form class="container containerLogin needs-validation" >
+        <form action="./controller/UsuarioController.php" method="POST" class="container containerLogin needs-validation" >
             <div class="formulario">
                 <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
                 <div class="col-md-12">
-                    <input type="email" class="form-control" id="inputEmail3" required>
+                    <input type="text" class="form-control" name="email" >
                 </div>
             </div>
             <div class="formulario">
                 <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
                 <div class="col-sm-12">
-                    <input type="password" class="form-control" id="inputPassword3" required>
+                    <input type="password" class="form-control" id="inputPassword3" name="password" required>
                 </div>
             </div>
 
             <div class="botaoFormulario">
+                <input type="hidden" name= "acao" value="login">
                 <a href="cadastro.php" class="btn btn-primary mb-3">Cadastrar</a>
-                <a href="Home.php" class="btn btn-primary mb-3">Entrar</a>
+                <button type="submit" class="btn btn-primary mb-3">Entrar</button>
             </div>
         </form>
 
