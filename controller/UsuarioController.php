@@ -24,27 +24,33 @@ class Usuario
         $comentario = $array['textoComentario'];
         $avaliacao = $array['avaliacao'];
         $idUsuario = $array['idUsuario'];
+        $idFilme = $array['idFilme'];
 
-        $insert = "INSERT INTO comentario (textoComentario, avaliacao, idUsuario)
-        VALUES ('$comentario', '$avaliacao', $idUsuario)";
+        $insert = "INSERT INTO comentario VALUES (null,'$comentario', '$avaliacao', $idUsuario,$idFilme)";
 
-        $obj_conexao->query($insert);
-
-
-        return true;
+        return $obj_conexao->query($insert);
+        
     }
 
 
-    public function retornarIdUsuario($id){
+    //?
+    public function pegarIdFilme($nomeFilme){
 
         $conexao = new Sql();
         $obj_conexao = $conexao->conectar();
-
-        $buscarId = "SELECT * FROM comentario WHERE idUsuario = $id";
-
-        $retorno = mysqli_query($obj_conexao, $buscarId);
-
-        return $retorno;
+    
+        $id = "SELECT id FROM filme WHERE titulo = '$nomeFilme'";
+    
+        $resultado = mysqli_query($obj_conexao, $id);
+    
+        if ($resultado) {
+            $row = mysqli_fetch_assoc($resultado);
+            $idFilme = intval($row['id']); // Converte o valor para um inteiro
+            mysqli_free_result($resultado); // Libera o resultado da consulta
+            return $idFilme;
+        } else {
+            return 0; // Retorna 0 ou outro valor padrão se a consulta falhar
+        }
     }
 }
 

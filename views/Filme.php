@@ -22,9 +22,10 @@ require_once("layout/header.php");
     ?>
 
     <?php
+    session_start();
     $dadosFilme = json_decode($_POST["dadosFilme"]);
     $dados = $_POST["dadosFilme"];
-    var_dump($dados);
+
     function AdicionaAspasSimples($array)
     {
 
@@ -92,9 +93,9 @@ require_once("layout/header.php");
 
     <h2 class="tituloComentario">Conmentarios</h2>
 
-    <form action="./controller/ComentarioController.php" method="POST" class="form-floating container mt-5 text-end">
+    <form action="./controller/ComentarioViewController.php" method="POST" class="form-floating container mt-5 text-end">
         <div class="d-flex comentario">
-            <h3>Hugu Machado</h3>
+            <h3><?php echo $_SESSION["idUsuario"]?></h3>
 
             <select name="avaliacao" class="selecionar text-center" style="width: 150px;">
                 <option selected>Selecionar</option>

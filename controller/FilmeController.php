@@ -1,39 +1,28 @@
 <?php
 
-// include $_SERVER['DOCUMENT_ROOT'] . '/filmes/model/conexao.php';
-
-
 class Filme
 {
-
-    public function cadastrar($objeto)
-    {
+    public function cadastrar($array){
         $conexao = new Sql();
         $obj_conexao = $conexao->conectar();
 
-        $titulo = $objeto->Title;
-        $avaliacao = $objeto->avaliacao;
-        $poster = $objeto->Poster;
-        $descicao = $objeto->Plot;
-        $ano = $objeto->Year;
-        $escritor = $objeto->Writer;
-        $ator = $objeto->Actors;
-        $idiomas = $objeto->Language;
-        $premios = $objeto->Awards;
-        $dataLancamento = $objeto->Released;
-        $genero = $objeto->Genre;
-        $idComentario = $objeto->idComentario;
+        $titulo = $array["Title"];
+        $avaliacao = $array["avaliacao"];
+        $poster = $array["Poster"];
+        $descicao = $array["Plot"];
+        $ano = $array["Year"];
+        $escritor = $array["Writer"];
+        $ator = $array["Actors"];
+        $idiomas = $array["Language"];
+        $premios = $array["Awards"];
+        $dataLancamento = $array["Released"];
+        $genero = $array["Genre"];
 
-        $insert = "INSERT INTO filme ('titulo', 'genero', 'poster', 'descicao','idComentario', 'ano', 'avaliacao', 'escritor', 'ator','idiomas', 'premios', 'dataLancamento')
-        VALUES ('$titulo', '$genero', '$poster', '$descicao',$idComentario, '$ano', '$avaliacao', '$escritor', '$ator', '$idiomas', '$premios', '$dataLancamento');";
+        $insert = "INSERT INTO filme VALUES (null,'$titulo', '$genero', '$poster', '$descicao', '$ano', '$avaliacao', '$escritor', '$ator', '$idiomas', '$premios', '$dataLancamento');";
 
         $obj_conexao->query($insert);
 
         return true;
     }
-
-
 }
-
-
 ?>

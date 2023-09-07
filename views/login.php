@@ -13,7 +13,7 @@ require_once("layout/header.php");
 
     <div class="containerLogin">
 
-        <form action="./controller/UsuarioController.php" method="POST" class="container containerLogin needs-validation" >
+        <form action="./controller/UsuarioViewController.php" method="POST" class="container containerLogin needs-validation" >
             <div class="formulario">
                 <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
                 <div class="col-md-12">
