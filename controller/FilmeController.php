@@ -1,5 +1,7 @@
 <?php
 
+include $_SERVER['DOCUMENT_ROOT'] . '/filmes/model/conexao.php';
+
 class Filme
 {
     public function cadastrar($array){
@@ -20,9 +22,41 @@ class Filme
 
         $insert = "INSERT INTO filme VALUES (null,'$titulo', '$genero', '$poster', '$descicao', '$ano', '$avaliacao', '$escritor', '$ator', '$idiomas', '$premios', '$dataLancamento');";
 
-        $obj_conexao->query($insert);
+        return $obj_conexao->query($insert);
+    }
 
-        return true;
+
+    public function exibir($titulo){
+
+        $conexao = new Sql();
+        $obj_conexao = $conexao->conectar();
+
+        $dadosFilme = "SELECT * FROM filme WHERE titulo = $titulo";
+    
+    try {
+        $resultado = mysqli_query($obj_conexao, $dadosFilme);
+        return $resultado;
+
+    } catch (\Throwable $th) {
+        return null;        
+    }
+
+    }
+
+    public function persisteFilme($titulo){
+
+        $filme = $this->exibir($titulo);
+
+        if(isset($filme)){
+
+            return true;
+        }
+        else{
+
+            return false;
+        }
+
+
     }
 }
 ?>

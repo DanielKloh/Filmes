@@ -80,7 +80,7 @@ require_once("layout/header.php");
                 <div class='card' >
                     <img src='" . $resultado->Poster . "' class='card-img-top' alt='capa do filme'>
                     <div class='card-body text-center'>
-                        <form method='POST' action='Filme.php'>
+                        <form method='POST' action='./controller/FilmeViewController.php'>
                             <button class='tituloPoster'>" . $_POST["titulo"] . " </button>
                             <input type='hidden' name='dadosFilme' value='" . $json . "'/>
                         </form>

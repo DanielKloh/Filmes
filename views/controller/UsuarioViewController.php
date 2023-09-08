@@ -32,6 +32,11 @@ if ($acao == "login")
         session_start();
 
         $_SESSION['idUsuario'] = $usuario['id'];
+        $_SESSION['nomeUsuario'] = $usuario['nome'];
+        $_SESSION['emailUsuario'] = $usuario['email'];
+        $_SESSION['generoUsuario'] = $usuario['genero'];
+        $_SESSION['dataNascimentoUsuario'] = $usuario['dataNascimento'];
+        $_SESSION['telefoneUsuario'] = $usuario['telefone'];
 
         header("Location: ../Home.php");
         exit();
