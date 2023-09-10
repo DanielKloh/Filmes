@@ -9,21 +9,6 @@ include $_SERVER['DOCUMENT_ROOT'] . '/filmes/controller/FilmeController.php';
 //converter os dados do json para um array
 $dadosFilme = json_decode($_POST["dadosFilme"]);
 
-// function AdicionaAspasSimples($array)
-// {
-
-//     //Percorre o objeto substituindo as " + " por " ' "
-//     foreach ($array as $propriedade => $valor) {
-//         if (is_string($valor)) {
-//             $array->$propriedade = str_replace("+", "'", $valor);
-//         }
-//     }
-
-//     return $array;
-// }
-
-// //Formata os dados do filme com a sintaxe correta
-// $dadosFilme = (AdicionaAspasSimples($dados));
 
 $titulo = $dadosFilme->Title;
 
@@ -31,7 +16,7 @@ $filme = new Filme();
 
 
 
-//Monta um array para popular os campos do método de cadastrar filme
+//Monta um array com os dados da API
 $arrayFilme = [
     "Title" => $dadosFilme->Title,
     "avaliacao" => "bom",
@@ -46,20 +31,30 @@ $arrayFilme = [
     "Genre" => $dadosFilme->Genre,
 ];
 
-
 $persistir = $filme->persisteFilme($titulo);
+
 
 if ($persistir == true) {
 
+    $idFilme = ($filme->pegarIdFilme($titulo));
+
+    $comentario = $filme->pegarComentario($idFilme);
+
     $retorno = $filme->exibir($titulo);
+    
+    $retorno = serialize($retorno);
+    $comentario = serialize($comentario);
+
+    setcookie("dadosFilme", $retorno,  time() + 600, "/");
+    setcookie("dadosComentario", $comentario, time() + 600, "/");
+
 
 } else {
-    $retorno = $filme->cadastrar($arrayFilme);
+    $dadosSerializados = serialize($arrayFilme);
+
+    setcookie("dadosFilme", $dadosSerializados, time() + 600, "/");
+    setcookie("filmeNovo", true, time() + 6, "/");
 }
-
-$dadosSerializados = serialize($arrayFilme);
-
-setcookie("dadosFilme", $dadosSerializados, time() + 600, "/");
 
 header("Location: /Filmes/views/Filme.php");
 

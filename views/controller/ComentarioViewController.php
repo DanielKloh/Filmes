@@ -12,7 +12,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/filmes/controller/FilmeController.php';
 //Classe filme
 $filme = new Filme();
 
-//converter os dados do json para um array
+//converter os dados do json para um array, dados vem da tela Filme.php
 $dadosFilme = json_decode($_POST["dadosFilme"]);
 
 //Monta um array para popular os campos do método de cadastrar filme
@@ -30,7 +30,8 @@ $arrayFilme = [
     "Genre" => $dadosFilme->Genre,
 ];
 
-//Chama o métudo de cadastro do filme
+
+//Chama o método de cadastro do filme
 $filme->cadastrar($arrayFilme);
 
 
@@ -51,9 +52,11 @@ $arrayComentario = [
     "idFilme" => $idFilme
 ];
 
-//Chama o métudo de comentar
+//Chama o método de comentar
 $usuario->comentar($arrayComentario);
 
+//Coloca que o filme existe em cookie
+setcookie("filmeNovo", true, time() + 6, "/");
 
 //hedireciona para a tela de avaliação do filme
 header("Location: ../Filme.php");
