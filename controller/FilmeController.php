@@ -1,6 +1,6 @@
 <?php
 
-include $_SERVER['DOCUMENT_ROOT'] . '/filmes/model/conexao.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/filmes/model/conexao.php';
 
 class Filme
 {
@@ -41,19 +41,19 @@ class Filme
             if ($resultado) {
                 // Inicializar um array para armazenar os dados
                 $data = array();
-            
+
                 // Loop para percorrer os resultados
                 while ($row = $resultado->fetch_assoc()) {
                     // Adicionar cada linha ao array
                     $data[] = $row;
                 }
-            
+
                 // Liberar o resultado
                 $resultado->free();
-            
+
                 // Fechar a conexão
                 $obj_conexao->close();
-            
+
             } else {
                 echo "Erro na consulta: " . $obj_conexao->error;
             }
@@ -73,13 +73,14 @@ class Filme
         if ($filme != false) {
             return true;
         } else {
-            
+
             return false;
         }
     }
 
 
-    public function pegarComentario($idFilme){
+    public function pegarComentario($idFilme)
+    {
 
         $conexao = new Sql();
         $obj_conexao = $conexao->conectar();
@@ -88,22 +89,80 @@ class Filme
 
         $resultado = mysqli_query($obj_conexao, $comentario);
         if ($resultado) {
-            $row = mysqli_fetch_assoc($resultado);
-            $comentario = $row['textoComentario']; // Converte o valor para um inteiro
-            mysqli_free_result($resultado); // Libera o resultado da consulta
-            return $comentario;
+            $comentarios = array();
+
+            // Iterar através dos resultados e adicionar os comentários ao array.
+            while ($row = mysqli_fetch_assoc($resultado)) {
+                $comentarios[] = $row['textoComentario'];
+            }
+
+            return $comentarios;
+            // Fechar a consulta.
         } else {
             return 0; // Retorna 0 ou outro valor padrão se a consulta falhar
         }
     }
 
-    public function pegarIdFilme($titulo){
+
+
+
+
+
+
+    public function gerarIdUsario($idFilme)
+    {
+        $conexao = new Sql();
+        $obj_conexao = $conexao->conectar();
+
+        $idUsuario = "SELECT idUsuario FROM comentario WHERE idFilme = $idFilme";
+
+
+        $resultado = mysqli_query($obj_conexao, $idUsuario);
+
+        $comentarios = array();
+
+        // Iterar através dos resultados e adicionar os comentários ao array.
+        while ($row = mysqli_fetch_assoc($resultado)) {
+            $comentarios[] = intval($row['idUsuario']);
+        }
+
+        return $comentarios;
+
+    }
+
+    public function buscarNomeDeQuemComentou($idUsuario)
+    {
+        $conexao = new Sql();
+        $obj_conexao = $conexao->conectar();
+
+        $comentario = "SELECT nome FROM usuario WHERE id = $idUsuario";
+
+        $resultado = mysqli_query($obj_conexao, $comentario);
+
+        $comentarios = array();
+
+        // Iterar através dos resultados e adicionar os comentários ao array.
+        while ($row = mysqli_fetch_assoc($resultado)) {
+            $comentarios[] = $row['nome'];
+        }
+
+        return $comentarios;
+
+    }
+
+
+
+
+
+
+    public function pegarIdFilme($titulo)
+    {
         $conexao = new Sql();
         $obj_conexao = $conexao->conectar();
 
         $comentario = "SELECT id FROM filme WHERE titulo = '$titulo'";
 
-        $resultado = mysqli_query($obj_conexao,$comentario);
+        $resultado = mysqli_query($obj_conexao, $comentario);
 
         if ($resultado) {
             $row = mysqli_fetch_assoc($resultado);
@@ -114,6 +173,6 @@ class Filme
             return 0; // Retorna 0 ou outro valor padrão se a consulta falhar
         }
 
-    } 
+    }
 }
 ?>

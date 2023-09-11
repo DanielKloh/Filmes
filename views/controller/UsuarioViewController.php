@@ -1,6 +1,6 @@
 <?php
 
-include $_SERVER['DOCUMENT_ROOT'].'/filmes/controller/UsuarioController.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/filmes/controller/UsuarioController.php';
 
 $obj_usuario = new Usuario();
 
@@ -39,7 +39,7 @@ if ($acao == "login")
         $_SESSION['telefoneUsuario'] = $usuario['telefone'];
 
         header("Location: ../Home.php");
-        exit();
+
     }
 }
 

@@ -1,5 +1,5 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT'] . '/filmes/model/conexao.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/filmes/model/conexao.php';
 
 class Usuario
 {
@@ -47,11 +47,13 @@ class Usuario
             $row = mysqli_fetch_assoc($resultado);
             $idFilme = intval($row['id']); // Converte o valor para um inteiro
             mysqli_free_result($resultado); // Libera o resultado da consulta
+
             return $idFilme;
         } else {
             return 0; // Retorna 0 ou outro valor padrão se a consulta falhar
         }
     }
+
 }
 
 ?>

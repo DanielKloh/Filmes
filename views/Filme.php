@@ -13,19 +13,20 @@ require_once("layout/header.php");
     ?>
 
     <?php
-
+    echo "O film é novo?";
+    var_dump($_COOKIE['filmeNovo']);
     //Inicia sessão
     session_start();
 
 
     // Recupera a string serializada do cookie
     $dadosSerializados = $_COOKIE['dadosFilme'];
-
     $dadosFilmeExistente = unserialize($_COOKIE['dadosFilme']);
+
 
     function removerBarraInvertida($string)
     {
-        // Substitui '\\' por '' na string
+        // Substitui '\/' por '/' na string
         $novaString = str_replace('\\', '', $string);
         return $novaString;
     }
@@ -36,10 +37,11 @@ require_once("layout/header.php");
     $dadosFilme = unserialize($dadosSemBarra);
 
 
-    if (isset($_COOKIE['filmeNovo'])) {
+    if ($_COOKIE['filmeNovo'] == "true") {
 
         //Monta todo o cantainer com os dados do filme na tela que estao no banco(Os dados do banco estao em portugues)
         $filmeConteiner = '
+        dados da API
     <h2 class="dadosFIlme text-center mb-5 mt-3">' . $dadosFilme["Title"] . '</h2>
     
     <div class="containerFilmes mb-5">
@@ -85,8 +87,9 @@ require_once("layout/header.php");
 
     } else {
 
-
+        echo "dados do banco";
         $filmeConteiner = '
+        
     <h2 class="dadosFIlme text-center mb-5 mt-3">' . $dadosFilmeExistente[0]["titulo"] . '</h2>
     
     <div class="containerFilmes mb-5">
@@ -148,7 +151,7 @@ require_once("layout/header.php");
             //Se o usuario estiver logado
             if (isset($_SESSION['idUsuario'])) {
                 //Exibi o nome do usuaio
-                echo "<h3> " . $_SESSION['idUsuario'] . "</h3>";
+                echo "<h3> " . $_SESSION['nomeUsuario'] . "</h3>";
 
             } else {
                 //Mostra que o usuario não esta logado
@@ -194,16 +197,18 @@ require_once("layout/header.php");
         <input type="hidden" name="comentario" id="input">
 
         <!-- Manda os dados do fime para a controller para futuro cadastro de filme -->
-        <?php echo "<input type='hidden' value='" . json_encode($dadosFilmeExistente) . "' name='dadosFilme' id='dadosFilme'>" ?>
-
         <?php
-        //Se o usuario estiver logado abilita o botão de comentar
-        if (isset($_SESSION["idUsuario"])) {
-
-            echo '<button type="submit" class="btn btn-primary mt-4" onclick="popularInput()">Comentar</button>';
+        if (isset($dadosFilme)) {
+            echo "<input type='hidden' value='" . json_encode($dadosFilme) . "' name='dadosFilme' id='dadosFilme'>";
         } else {
-            echo '<a href="#" class="btn btn-warning mt-4">Comentar</a>';
+            echo "<input type='hidden' value='" . json_encode($dadosFilmeExistenteSemBarra) . "' name='dadosFilme' id='dadosFilme'>";
         }
+
+
+        //Se o usuario estiver logado abilita o botão de comentar
+        
+        echo '<button type="submit" class="btn btn-primary mt-4" onclick="popularInput()">Comentar</button>';
+
         ?>
 
     </form>
@@ -214,40 +219,43 @@ require_once("layout/header.php");
     <?php
 
 
-    if (isset($_COOKIE['filmeNovo'])) {
+
+
+    if ($_COOKIE['filmeNovo'] == "true") {
 
         $containerComentario = '
         <div class="form-floating container mt-5 text-center">
             <h3>Nenhum Comentário</h3>
         </div>';
     } else {
-        $containerComentario = '    <div class="form-floating container mt-5 text-end">
+
+        $arrayComentario = unserialize($_COOKIE["dadosComentario"]);
+        $arrayUsuario = unserialize($_COOKIE["nomeUsuario"]);
+
+echo "aqui </br> </br>";
+        var_dump($arrayUsuario[0][0]);
+
+
+//ajeitar o arryUsuario
+        for ($i = 0; $i < count($arrayComentario); $i++) {
+            echo '    
+    <div class="form-floating container mt-5 text-end">
         <div class="d-flex comentario">
-            <h3>Julio Berenete</h3>
+            <h3>' . $arrayUsuario[0][$i] . '</h3>
             <p class="avaliacao">Bom</p>
         </div>
         <div class=" textoComentario">
-            Esse filme nem fede nem cheira mas ainda assim me agradou um bucado deveras elevado para mim.
-            Devido a isso eu dei essa avaliação para o filme em questão.
-        </div>
-    </div>
-
-
-    <div class="form-floating container mt-5 text-end">
-        <div class="d-flex comentario">
-            <h3>Carlos Ricardo</h3>
-            <p class="avaliacao">Muito Ruim</p>
-        </div>
-        <div class=" textoComentario">
-            Ta maluco doido? Esse filme é a pior coisa que ja vi. Essa poluição audio visual me fez chorar de tão
-            ruim que é. Quero meu dinheiro de volta e mais, quero a minhi dignindade.
+        ' . $arrayComentario[$i] . '
         </div>
     </div>';
+        }
     }
 
-    $_COOKIE["dadosComentario"] = null;
+
     echo $containerComentario;
     ?>
+
+
 
 
 
@@ -256,6 +264,7 @@ require_once("layout/header.php");
     require_once("layout/footer.php");
 
     ?>
+
 
 
 </body>

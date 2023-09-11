@@ -4,7 +4,7 @@
 session_start();
 
 //Incluir arquivos necessários
-include $_SERVER['DOCUMENT_ROOT'] . '/filmes/controller/FilmeController.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/filmes/controller/FilmeController.php';
 
 //converter os dados do json para um array
 $dadosFilme = json_decode($_POST["dadosFilme"]);
@@ -34,8 +34,9 @@ $arrayFilme = [
 $persistir = $filme->persisteFilme($titulo);
 
 
-if ($persistir == true) {
 
+if ($persistir == true) {
+    $valor = "false";
     $idFilme = ($filme->pegarIdFilme($titulo));
 
     $comentario = $filme->pegarComentario($idFilme);
@@ -45,18 +46,21 @@ if ($persistir == true) {
     $retorno = serialize($retorno);
     $comentario = serialize($comentario);
 
+
     setcookie("dadosFilme", $retorno,  time() + 600, "/");
-    setcookie("dadosComentario", $comentario, time() + 600, "/");
+    setcookie("dadosComentario", $comentario, time() + 6, "/");
+    setcookie("filmeNovo", $valor, time() + 6, "/");
 
 
 } else {
+
+    $valor = "true";
+
     $dadosSerializados = serialize($arrayFilme);
 
     setcookie("dadosFilme", $dadosSerializados, time() + 600, "/");
-    setcookie("filmeNovo", true, time() + 6, "/");
+    setcookie("filmeNovo", $valor, time() + 6, "/");
 }
 
 header("Location: /Filmes/views/Filme.php");
-
-
 ?>
