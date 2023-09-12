@@ -11,12 +11,13 @@ class Usuario
         $comando = "SELECT * FROM usuario WHERE email = '$email' AND senha = '$senha'";
 
         $retorno = mysqli_query($conexao, $comando);
-        
+
         return $retorno;
     }
 
 
-    public function comentar($array){
+    public function comentar($array)
+    {
 
         $conexao = new Sql();
         $obj_conexao = $conexao->conectar();
@@ -29,30 +30,32 @@ class Usuario
         $insert = "INSERT INTO comentario VALUES (null,'$comentario', '$avaliacao', $idUsuario,$idFilme)";
 
         return $obj_conexao->query($insert);
-        
+
     }
 
 
     //?
-    public function pegarIdFilme($nomeFilme){
+    public function pegarIdFilme($nomeFilme)
+    {
 
         $conexao = new Sql();
         $obj_conexao = $conexao->conectar();
-    
-        $id = "SELECT id FROM filme WHERE titulo = '$nomeFilme'";
-    
-        $resultado = mysqli_query($obj_conexao, $id);
-    
-        if ($resultado) {
-            $row = mysqli_fetch_assoc($resultado);
-            $idFilme = intval($row['id']); // Converte o valor para um inteiro
-            mysqli_free_result($resultado); // Libera o resultado da consulta
 
-            return $idFilme;
-        } else {
-            return 0; // Retorna 0 ou outro valor padrão se a consulta falhar
-        }
+        $id = "SELECT id FROM filme WHERE titulo = '$nomeFilme'";
+
+        $resultado = mysqli_query($obj_conexao, $id);
+
+
+        $row = mysqli_fetch_assoc($resultado);
+
+        $idFilme = intval($row['id']); 
+        
+        mysqli_free_result($resultado); 
+
+        return $idFilme;
+
     }
+
 
 }
 

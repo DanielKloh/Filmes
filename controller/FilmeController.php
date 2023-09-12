@@ -4,6 +4,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/filmes/model/conexao.php';
 
 class Filme
 {
+
     public function cadastrar($array)
     {
         $conexao = new Sql();
@@ -29,7 +30,6 @@ class Filme
 
     public function exibir($titulo)
     {
-
         $conexao = new Sql();
         $obj_conexao = $conexao->conectar();
 
@@ -67,7 +67,6 @@ class Filme
 
     public function persisteFilme($titulo)
     {
-
         $filme = $this->exibir($titulo);
 
         if ($filme != false) {
@@ -81,32 +80,21 @@ class Filme
 
     public function pegarComentario($idFilme)
     {
-
         $conexao = new Sql();
         $obj_conexao = $conexao->conectar();
 
         $comentario = "SELECT textoComentario FROM comentario WHERE idFilme = $idFilme";
 
         $resultado = mysqli_query($obj_conexao, $comentario);
-        if ($resultado) {
-            $comentarios = array();
 
-            // Iterar através dos resultados e adicionar os comentários ao array.
-            while ($row = mysqli_fetch_assoc($resultado)) {
-                $comentarios[] = $row['textoComentario'];
-            }
+        $comentarios = array();
 
-            return $comentarios;
-            // Fechar a consulta.
-        } else {
-            return 0; // Retorna 0 ou outro valor padrão se a consulta falhar
+        while ($row = mysqli_fetch_assoc($resultado)) {
+            $comentarios[] = $row['textoComentario'];
         }
+
+        return $comentarios;
     }
-
-
-
-
-
 
 
     public function gerarIdUsario($idFilme)
@@ -116,12 +104,10 @@ class Filme
 
         $idUsuario = "SELECT idUsuario FROM comentario WHERE idFilme = $idFilme";
 
-
         $resultado = mysqli_query($obj_conexao, $idUsuario);
 
         $comentarios = array();
 
-        // Iterar através dos resultados e adicionar os comentários ao array.
         while ($row = mysqli_fetch_assoc($resultado)) {
             $comentarios[] = intval($row['idUsuario']);
         }
@@ -135,25 +121,18 @@ class Filme
         $conexao = new Sql();
         $obj_conexao = $conexao->conectar();
 
-        $comentario = "SELECT nome FROM usuario WHERE id = $idUsuario";
+        $nomes = "SELECT nome FROM usuario WHERE id = $idUsuario";
 
-        $resultado = mysqli_query($obj_conexao, $comentario);
+        $resultado = mysqli_query($obj_conexao, $nomes);
 
-        $comentarios = array();
+        $row = mysqli_fetch_assoc($resultado);
 
-        // Iterar através dos resultados e adicionar os comentários ao array.
-        while ($row = mysqli_fetch_assoc($resultado)) {
-            $comentarios[] = $row['nome'];
-        }
+        $nomeUsuario = ($row['nome']);
 
-        return $comentarios;
+        mysqli_free_result($resultado);
 
+        return $nomeUsuario;
     }
-
-
-
-
-
 
     public function pegarIdFilme($titulo)
     {
@@ -164,15 +143,155 @@ class Filme
 
         $resultado = mysqli_query($obj_conexao, $comentario);
 
-        if ($resultado) {
-            $row = mysqli_fetch_assoc($resultado);
-            $idFilme = intval($row['id']); // Converte o valor para um inteiro
-            mysqli_free_result($resultado); // Libera o resultado da consulta
-            return $idFilme;
+        $row = mysqli_fetch_assoc($resultado);
+
+        $idFilme = intval($row['id']);
+
+        mysqli_free_result($resultado);
+
+        return $idFilme;
+    }
+
+
+    public function gerarAvaliacao($idFilme)
+    {
+
+        $conexao = new Sql();
+        $obj_conexao = $conexao->conectar();
+
+        $comentario = "SELECT avaliacao FROM comentario WHERE idFilme = $idFilme";
+
+        $retorno = mysqli_query($obj_conexao, $comentario);
+
+        $data = array();
+
+        while ($row = mysqli_fetch_assoc($retorno)) {
+            $data[] = $row['avaliacao'];
+        }
+
+        return $data;
+    }
+
+
+    public function avaliar($arrayAvaliacoes)
+    {
+
+        $media = 0.0;
+        $qtdComentario = count($arrayAvaliacoes);
+
+        for ($i = 0; $i < $qtdComentario; $i++) {
+
+
+            if ($arrayAvaliacoes[$i] == "Muito Ruim") {
+
+                $media += 1;
+
+            } elseif ($arrayAvaliacoes[$i] == "Ruim") {
+
+                $media += 2;
+
+            } elseif ($arrayAvaliacoes[$i] == "OK") {
+
+                $media += 3;
+
+            } elseif ($arrayAvaliacoes[$i] == "Bom") {
+
+                $media += 4;
+
+            } elseif ($arrayAvaliacoes[$i] == "Muito Bom") {
+
+                $media += 5;
+            }
+        }
+        
+        $media /= $qtdComentario;
+
+        return $media;
+    }
+
+
+    public function usuarioComentou($idUsuario, $idFilme)
+    {
+        $conexao = new Sql();
+        $obj_conexao = $conexao->conectar();
+        try {
+            $consulta = "SELECT * FROM comentario WHERE idUsuario = $idUsuario AND idFilme = $idFilme";
+
+            mysqli_query($obj_conexao, $consulta);
+
+            return "true";
+        } catch (\Throwable $th) {
+            return "false";
+        }
+
+
+        if ($retorno) {
+
         } else {
-            return 0; // Retorna 0 ou outro valor padrão se a consulta falhar
+
+        }
+    }
+
+
+    public function comentarioUsuario($idUsuario, $idFilme)
+    {
+        $conexao = new Sql();
+        $obj_conexao = $conexao->conectar();
+        try {
+            $consulta = "SELECT textoComentario FROM comentario WHERE idUsuario = $idUsuario AND idFilme = $idFilme";
+
+            $retorno = mysqli_query($obj_conexao, $consulta);
+
+            $row = mysqli_fetch_assoc($retorno);
+
+            $textoComentario = $row["textoComentario"];
+            return $textoComentario;
+        } catch (\Throwable $th) {
+            return false;
+        }
+
+
+        if ($retorno) {
+
+        } else {
+
+        }
+    }
+
+
+
+    public function atualizarComentario($textoComentario,$idComentario){
+
+        $conexao = new Sql();
+        $obj_conexao = $conexao->conectar();
+        try {
+            $update = "UPDATE comentario SET textoComentario = '$textoComentario' WHERE id = $idComentario";
+
+            $obj_conexao->query($update);
+
+            return true;
+        } catch (\Throwable $th) {
+            return false;
         }
 
     }
+
+    public function buscarIdComentario($idUsuario,$idFilme){
+        $conexao = new Sql();
+        $obj_conexao = $conexao->conectar();
+       
+            $consulta = "SELECT id FROM comentario WHERE idUsuario = $idUsuario AND idFilme = $idFilme";
+
+            $retorno = mysqli_query($obj_conexao,$consulta);
+
+            $row = mysqli_fetch_assoc($retorno);
+
+            $idComentario = intval($row["id"]); 
+
+
+            return $idComentario;
+        
+    }
+
 }
 ?>

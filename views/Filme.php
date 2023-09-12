@@ -13,8 +13,7 @@ require_once("layout/header.php");
     ?>
 
     <?php
-    echo "O film é novo?";
-    var_dump($_COOKIE['filmeNovo']);
+
     //Inicia sessão
     session_start();
 
@@ -41,7 +40,6 @@ require_once("layout/header.php");
 
         //Monta todo o cantainer com os dados do filme na tela que estao no banco(Os dados do banco estao em portugues)
         $filmeConteiner = '
-        dados da API
     <h2 class="dadosFIlme text-center mb-5 mt-3">' . $dadosFilme["Title"] . '</h2>
     
     <div class="containerFilmes mb-5">
@@ -55,7 +53,7 @@ require_once("layout/header.php");
         <div class="dadosFilme">
             <div class="d-flex mb-3 mt-3">
                 <p class="FilmeAno">Year: ' . $dadosFilme["Year"] . '</p>
-                <p class="FilmeRatings">Ratings: 8.5/10</p>
+                <p class="FilmeRatings">Ratings: N/A</p>
                 <p>Released:' . $dadosFilme["Released"] . '</p>
             </div>
 
@@ -86,8 +84,6 @@ require_once("layout/header.php");
     </div>';
 
     } else {
-
-        echo "dados do banco";
         $filmeConteiner = '
         
     <h2 class="dadosFIlme text-center mb-5 mt-3">' . $dadosFilmeExistente[0]["titulo"] . '</h2>
@@ -103,7 +99,7 @@ require_once("layout/header.php");
         <div class="dadosFilmeExistente">
             <div class="d-flex mb-3 mt-3">
                 <p class="FilmeAno">Year: ' . $dadosFilmeExistente[0]["ano"] . '</p>
-                <p class="FilmeRatings">Ratings: 8.5/10</p>
+                <p class="FilmeRatings">Ratings: ' . round($_COOKIE["avaliacao"], 1) . ' /10 </p>
                 <p>Released: ' . $dadosFilmeExistente[0]["dataLancamento"] . '</p>
             </div>
 
@@ -142,6 +138,29 @@ require_once("layout/header.php");
 
     <h2 class="tituloComentario">Conmentarios</h2>
 
+
+    <?php
+
+$usuarioComentou =  false;
+
+    if (isset($_COOKIE["nomeUsuario"])) {
+        $nomes = unserialize($_COOKIE["nomeUsuario"]);
+
+        for ($i = 0; $i < count($nomes); $i++) {
+            if ($nomes[$i] == $_SESSION["nomeUsuario"]) {
+
+                $suarioComentou = true;
+            }
+        }
+    }
+
+
+    if($usuarioComentou == false){
+
+    }
+
+
+    ?>
     <form action="./controller/ComentarioViewController.php" method="POST"
         class="form-floating container mt-5 text-end">
         <div class="d-flex comentario">
@@ -169,9 +188,22 @@ require_once("layout/header.php");
             </select>
         </div>
 
+<?php
 
-        <textarea id="texto" class="form-control textoComentario" placeholder="Comentario"
-            style="height: 100px"></textarea>
+if(isset($_COOKIE["usuarioComentou"]) && $_COOKIE["usuarioComentou"] == "false"){
+echo'        <textarea id="texto" class="form-control textoComentario" placeholder="Comentario"
+style="height: 100px"></textarea>';
+}
+else{
+    echo'        <textarea id="texto" class="form-control textoComentario" placeholder="Comentario"
+    style="height: 100px">'.($_COOKIE['dadosComentario']).'</textarea>
+    
+    <input type="hidden" name="atualizarComentario" value"'.$_COOKIE['comentarioUsuario'].'"/>
+    ';
+    
+}
+
+?>
         <script>
 
             let textarea = document.getElementById("texto");
@@ -205,9 +237,15 @@ require_once("layout/header.php");
         }
 
 
-        //Se o usuario estiver logado abilita o botão de comentar
-        
-        echo '<button type="submit" class="btn btn-primary mt-4" onclick="popularInput()">Comentar</button>';
+        if(isset($_COOKIE["usuarioComentou"]) && $_COOKIE["usuarioComentou"] == "false"){
+            
+                echo '<button type="submit" class="btn btn-primary mt-4" onclick="popularInput()">Comentar</button>';
+            }
+            else{
+
+                echo '<button type="submit" class="btn btn-danger mt-4" onclick="popularInput()">apagar</button>';
+                echo '<button type="submit" class="btn btn-warning mt-4" onclick="popularInput()">editar</button>';
+            }
 
         ?>
 
@@ -216,14 +254,17 @@ require_once("layout/header.php");
 
 
 
+
+
+
+
+
+    
     <?php
-
-
-
 
     if ($_COOKIE['filmeNovo'] == "true") {
 
-        $containerComentario = '
+        echo '
         <div class="form-floating container mt-5 text-center">
             <h3>Nenhum Comentário</h3>
         </div>';
@@ -231,28 +272,23 @@ require_once("layout/header.php");
 
         $arrayComentario = unserialize($_COOKIE["dadosComentario"]);
         $arrayUsuario = unserialize($_COOKIE["nomeUsuario"]);
+        $arrayAvaliacao = unserialize($_COOKIE["arrayAvaliacao"]);
 
-echo "aqui </br> </br>";
-        var_dump($arrayUsuario[0][0]);
-
-
-//ajeitar o arryUsuario
+        //ajeitar o arryUsuario
         for ($i = 0; $i < count($arrayComentario); $i++) {
             echo '    
-    <div class="form-floating container mt-5 text-end">
+        <div class="form-floating container mt-5 text-end">
         <div class="d-flex comentario">
-            <h3>' . $arrayUsuario[0][$i] . '</h3>
-            <p class="avaliacao">Bom</p>
+            <h3>' . $arrayUsuario[$i] . '</h3>
+            <p class="avaliacao">' . $arrayAvaliacao[$i] . '</p>
         </div>
         <div class=" textoComentario">
         ' . $arrayComentario[$i] . '
         </div>
-    </div>';
+        </div>';
         }
     }
 
-
-    echo $containerComentario;
     ?>
 
 

@@ -1,0 +1,17 @@
+//fazer toda a logica da avaliação funcionar.
+
+desabilitar o botao de comentar se ja tiver comentado
+
+habilitar um botao de editar comentario e excluir comentario
+
+botao de logar e sair
+
+ajeitar a navbar e o footer
+
+cadastrar usuario
+
+editar dados do usuario
+
+esqueceu a senha
+
+barra de pesuisa funcional com js
