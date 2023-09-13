@@ -82,14 +82,20 @@ if ($persistir == true) {
     setcookie("filmeNovo", $valor, time() + 6, "/");
 }
 
+if(isset($idFilme)){
+
+    $verificarComentario = $filme->verificarComentario(intval($_SESSION["idUsuario"]), $idFilme);
+}
+else{
+    $verificarComentario = false;
+}
 
 
-
-
-if (isset($_POST["atualizarComentario"])) {
+if (isset($_POST["atualizarComentario"]) || $verificarComentario == true) {
 
     $usuarioComentou = $filme->usuarioComentou($_SESSION["idUsuario"], $idFilme);
     $usuarioTextoComentario = ($filme->comentarioUsuario($_SESSION["idUsuario"], $idFilme));
+    setcookie("dadosComentarioUsuarioAtual", $usuarioTextoComentario, time() + 6, "/");
 
     setcookie("usuarioComentou", $usuarioComentou, time() + 6, "/");
 

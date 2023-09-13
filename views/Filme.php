@@ -195,8 +195,9 @@ echo'        <textarea id="texto" class="form-control textoComentario" placehold
 style="height: 100px"></textarea>';
 }
 else{
+    $comentario = ($_COOKIE["dadosComentarioUsuarioAtual"]);
     echo'        <textarea id="texto" class="form-control textoComentario" placeholder="Comentario"
-    style="height: 100px">'.($_COOKIE['dadosComentario']).'</textarea>
+    style="height: 100px">'.$comentario.'</textarea>
     
     <input type="hidden" name="atualizarComentario" value"'.$_COOKIE['comentarioUsuario'].'"/>
     ';

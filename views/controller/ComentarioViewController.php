@@ -101,7 +101,7 @@ if (isset($_POST["atualizarComentario"])) {
 
     $idComentario = $filme->buscarIdComentario($_SESSION["idUsuario"], $idFilme);
 
-    $atualizarComentario = $filme->atualizarComentario($_POST["comentario"], $idComentario);
+    $atualizarComentario = $filme->atualizarComentario($_POST["comentario"], $idComentario,$_POST["avaliacao"]);
 
     $comentario = $filme->pegarComentario($idFilme);
 
@@ -151,7 +151,8 @@ setcookie("arrayAvaliacao", $arrayAvaliacaoSerializado, time() + 6, "/");
 
 
 
-
+$usuarioTextoComentario = ($filme->comentarioUsuario($_SESSION["idUsuario"], $idFilme));
+    setcookie("dadosComentarioUsuarioAtual", $usuarioTextoComentario, time() + 6, "/");
 
 if (isset($_POST["atualizarComentario"])) {
 
@@ -159,7 +160,7 @@ if (isset($_POST["atualizarComentario"])) {
     $usuarioTextoComentario = ($filme->comentarioUsuario($_SESSION["idUsuario"], $idFilme));
 
     setcookie("usuarioComentou", $usuarioComentou, time() + 6, "/");
-
+    
     if ($usuarioComentou == "true") {
         setcookie("comentarioUsuario", $usuarioTextoComentario, time() + 6, "/");
     }

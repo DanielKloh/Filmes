@@ -205,6 +205,7 @@ class Filme
         }
         
         $media /= $qtdComentario;
+        $media *= 2;
 
         return $media;
     }
@@ -260,12 +261,12 @@ class Filme
 
 
 
-    public function atualizarComentario($textoComentario,$idComentario){
+    public function atualizarComentario($textoComentario,$idComentario,$avaliacao){
 
         $conexao = new Sql();
         $obj_conexao = $conexao->conectar();
         try {
-            $update = "UPDATE comentario SET textoComentario = '$textoComentario' WHERE id = $idComentario";
+            $update = "UPDATE comentario SET textoComentario = '$textoComentario', avaliacao = '$avaliacao' WHERE id = $idComentario";
 
             $obj_conexao->query($update);
 
@@ -292,6 +293,28 @@ class Filme
             return $idComentario;
         
     }
+
+    public function verificarComentario($idUsuario, $idFilme){
+
+        $conexao = new Sql();
+        $obj_conexao = $conexao->conectar();
+        
+        $consulta = "SELECT id FROM comentario WHERE idUsuario = $idUsuario AND idFilme = $idFilme";
+
+        $retorno = mysqli_query($obj_conexao, $consulta);
+
+        $row = mysqli_fetch_assoc($retorno);
+
+        $idComentario = ($row["id"]); 
+
+
+        if($idComentario != null){
+            return true;
+        }
+        else {
+            return false;
+        }
+    } 
 
 }
 ?>
