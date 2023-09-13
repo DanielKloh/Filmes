@@ -23,6 +23,7 @@ require_once("layout/header.php");
     $dadosFilmeExistente = unserialize($_COOKIE['dadosFilme']);
 
 
+
     function removerBarraInvertida($string)
     {
         // Substitui '\/' por '/' na string
@@ -86,45 +87,45 @@ require_once("layout/header.php");
     } else {
         $filmeConteiner = '
         
-    <h2 class="dadosFIlme text-center mb-5 mt-3">' . $dadosFilmeExistente[0]["titulo"] . '</h2>
+    <h2 class="dadosFIlme text-center mb-5 mt-3">' . $dadosFilmeExistente["titulo"] . '</h2>
     
     <div class="containerFilmes mb-5">
 
         <div class="capaFilme">
             <img style="width: 18rem"
-                src="' . $dadosFilmeExistente[0]["poster"] . '"
+                src="' . $dadosFilmeExistente["poster"] . '"
                 class="card-img-top" alt="capa do filme">
         </div>
 
         <div class="dadosFilmeExistente">
             <div class="d-flex mb-3 mt-3">
-                <p class="FilmeAno">Year: ' . $dadosFilmeExistente[0]["ano"] . '</p>
-                <p class="FilmeRatings">Ratings: ' . round($_COOKIE["avaliacao"], 1) . ' /10 </p>
-                <p>Released: ' . $dadosFilmeExistente[0]["dataLancamento"] . '</p>
+                <p class="FilmeAno">Year: ' . $dadosFilmeExistente["ano"] . '</p>
+                <p class="FilmeRatings">Ratings: ' . round(unserialize($_COOKIE["mediaFilme"]), 1) . ' /10 </p>
+                <p>Released: ' . $dadosFilmeExistente["dataLancamento"] . '</p>
             </div>
 
             <span class="FilmeGenero">
-                Genre: ' . $dadosFilmeExistente[0]["genero"] . '
+                Genre: ' . $dadosFilmeExistente["genero"] . '
             </span>
 
             <div class="FilmeWriter mt-4 mb-4">
-                <p>Writer: ' . $dadosFilmeExistente[0]["escritor"] . '</p>
+                <p>Writer: ' . $dadosFilmeExistente["escritor"] . '</p>
             </div>
 
             <div class="mb-4">
-                <p>Actors: ' . $dadosFilmeExistente[0]["ator"] . '</p>
+                <p>Actors: ' . $dadosFilmeExistente["ator"] . '</p>
             </div>
 
             <div class="mb-4">
-                <p>Plot: ' . $dadosFilmeExistente[0]["descicao"] . '</p>
+                <p>Plot: ' . $dadosFilmeExistente["descicao"] . '</p>
             </div>
 
             <div class="FilmesLanguage mb-4">
-                <p><strong>Language</strong>: ' . $dadosFilmeExistente[0]["idiomas"] . '</p>
+                <p><strong>Language</strong>: ' . $dadosFilmeExistente["idiomas"] . '</p>
             </div>
 
             <div class="mb-4">
-                <p>Awards: ' . $dadosFilmeExistente[0]["premios"] . '</p>
+                <p>Awards: ' . $dadosFilmeExistente["premios"] . '</p>
             </div>
         </div>
     </div>';
@@ -141,7 +142,7 @@ require_once("layout/header.php");
 
     <?php
 
-$usuarioComentou =  false;
+    $usuarioComentou = false;
 
     if (isset($_COOKIE["nomeUsuario"])) {
         $nomes = unserialize($_COOKIE["nomeUsuario"]);
@@ -155,7 +156,7 @@ $usuarioComentou =  false;
     }
 
 
-    if($usuarioComentou == false){
+    if ($usuarioComentou == false) {
 
     }
 
@@ -188,23 +189,22 @@ $usuarioComentou =  false;
             </select>
         </div>
 
-<?php
+        <?php
 
-if(isset($_COOKIE["usuarioComentou"]) && $_COOKIE["usuarioComentou"] == "false"){
-echo'        <textarea id="texto" class="form-control textoComentario" placeholder="Comentario"
+        if (isset($_COOKIE["usuarioComentou"]) && $_COOKIE["usuarioComentou"] == "false") {
+            echo '        <textarea id="texto" class="form-control textoComentario" placeholder="Comentario"
 style="height: 100px"></textarea>';
-}
-else{
-    $comentario = ($_COOKIE["dadosComentarioUsuarioAtual"]);
-    echo'        <textarea id="texto" class="form-control textoComentario" placeholder="Comentario"
-    style="height: 100px">'.$comentario.'</textarea>
+        } else {
+            $comentario = unserialize($_COOKIE["dadosComentarioUsuarioAtual"]);
+            echo '        <textarea id="texto" class="form-control textoComentario" placeholder="Comentario"
+    style="height: 100px">' . $comentario . '</textarea>
     
-    <input type="hidden" name="atualizarComentario" value"'.$_COOKIE['comentarioUsuario'].'"/>
+    <input type="hidden" name="atualizarComentario" value"' . $_COOKIE['dadosComentarioUsuarioAtual'] . '"/>
     ';
-    
-}
 
-?>
+        }
+
+        ?>
         <script>
 
             let textarea = document.getElementById("texto");
@@ -234,19 +234,18 @@ else{
         if (isset($dadosFilme)) {
             echo "<input type='hidden' value='" . json_encode($dadosFilme) . "' name='dadosFilme' id='dadosFilme'>";
         } else {
-            echo "<input type='hidden' value='" . json_encode($dadosFilmeExistenteSemBarra) . "' name='dadosFilme' id='dadosFilme'>";
+            echo "<input type='hidden' value='" . json_encode($dadosFilmeExistente) . "' name='dadosFilme' id='dadosFilme'>";
         }
 
 
-        if(isset($_COOKIE["usuarioComentou"]) && $_COOKIE["usuarioComentou"] == "false"){
-            
-                echo '<button type="submit" class="btn btn-primary mt-4" onclick="popularInput()">Comentar</button>';
-            }
-            else{
+        if (isset($_COOKIE["usuarioComentou"]) && $_COOKIE["usuarioComentou"] == "false") {
 
-                echo '<button type="submit" class="btn btn-danger mt-4" onclick="popularInput()">apagar</button>';
-                echo '<button type="submit" class="btn btn-warning mt-4" onclick="popularInput()">editar</button>';
-            }
+            echo '<button type="submit" class="btn btn-primary mt-4" onclick="popularInput()">Comentar</button>';
+        } else {
+
+            echo '<button type="submit" class="btn btn-danger mt-4" onclick="popularInput()">apagar</button>';
+            echo '<button type="submit" class="btn btn-warning mt-4" onclick="popularInput()">editar</button>';
+        }
 
         ?>
 
@@ -260,7 +259,7 @@ else{
 
 
 
-    
+
     <?php
 
     if ($_COOKIE['filmeNovo'] == "true") {

@@ -42,22 +42,14 @@ class Filme
                 // Inicializar um array para armazenar os dados
                 $data = array();
 
-                // Loop para percorrer os resultados
-                while ($row = $resultado->fetch_assoc()) {
-                    // Adicionar cada linha ao array
+                $data = array(); // Inicialize um array vazio para armazenar os resultados
+
+                while ($row = mysqli_fetch_assoc($resultado)) {
                     $data[] = $row;
                 }
 
-                // Liberar o resultado
-                $resultado->free();
-
-                // Fechar a conexão
-                $obj_conexao->close();
-
-            } else {
-                echo "Erro na consulta: " . $obj_conexao->error;
+                return $data;
             }
-            return $data;
 
         } catch (\Throwable $th) {
             return false;
@@ -65,15 +57,18 @@ class Filme
 
     }
 
+    //Decide se o filme em questao está cadastrado retornando valores boleanos
     public function persisteFilme($titulo)
     {
         $filme = $this->exibir($titulo);
 
+        //Verifica se a consulta foi bem sucedida
         if ($filme != false) {
-            return true;
+            //Consulta bem sucedida
+            return true; //retorno verdadeiro
         } else {
-
-            return false;
+            //Consulta mal sucedida
+            return false; //retorno false
         }
     }
 
@@ -116,7 +111,7 @@ class Filme
 
     }
 
-    public function buscarNomeDeQuemComentou($idUsuario)
+    public function buscarNomeUsuario($idUsuario)
     {
         $conexao = new Sql();
         $obj_conexao = $conexao->conectar();
@@ -134,13 +129,17 @@ class Filme
         return $nomeUsuario;
     }
 
+    //Busca o id de um filme
     public function pegarIdFilme($titulo)
     {
+        //Faz a conexao como o banco de dados
         $conexao = new Sql();
         $obj_conexao = $conexao->conectar();
 
+        //Comando que sera executado
         $comentario = "SELECT id FROM filme WHERE titulo = '$titulo'";
 
+        //Execução do comando
         $resultado = mysqli_query($obj_conexao, $comentario);
 
         $row = mysqli_fetch_assoc($resultado);
@@ -173,7 +172,7 @@ class Filme
     }
 
 
-    public function avaliar($arrayAvaliacoes)
+    public function calculaMediaFilme($arrayAvaliacoes)
     {
 
         $media = 0.0;
@@ -203,7 +202,7 @@ class Filme
                 $media += 5;
             }
         }
-        
+
         $media /= $qtdComentario;
         $media *= 2;
 
@@ -261,7 +260,8 @@ class Filme
 
 
 
-    public function atualizarComentario($textoComentario,$idComentario,$avaliacao){
+    public function atualizarComentario($textoComentario, $idComentario, $avaliacao)
+    {
 
         $conexao = new Sql();
         $obj_conexao = $conexao->conectar();
@@ -277,44 +277,120 @@ class Filme
 
     }
 
-    public function buscarIdComentario($idUsuario,$idFilme){
+    public function buscarIdComentario($idUsuario, $idFilme)
+    {
         $conexao = new Sql();
         $obj_conexao = $conexao->conectar();
-       
-            $consulta = "SELECT id FROM comentario WHERE idUsuario = $idUsuario AND idFilme = $idFilme";
 
-            $retorno = mysqli_query($obj_conexao,$consulta);
-
-            $row = mysqli_fetch_assoc($retorno);
-
-            $idComentario = intval($row["id"]); 
-
-
-            return $idComentario;
-        
-    }
-
-    public function verificarComentario($idUsuario, $idFilme){
-
-        $conexao = new Sql();
-        $obj_conexao = $conexao->conectar();
-        
         $consulta = "SELECT id FROM comentario WHERE idUsuario = $idUsuario AND idFilme = $idFilme";
 
         $retorno = mysqli_query($obj_conexao, $consulta);
 
         $row = mysqli_fetch_assoc($retorno);
 
-        $idComentario = ($row["id"]); 
+        $idComentario = intval($row["id"]);
 
 
-        if($idComentario != null){
+        return $idComentario;
+
+    }
+
+    //Retora true ou false dependendo se o comentario existe
+    public function verificarComentario($idUsuario, $idFilme)
+    {
+
+        $conexao = new Sql();
+        $obj_conexao = $conexao->conectar();
+
+        $consulta = "SELECT id FROM comentario WHERE idUsuario = $idUsuario AND idFilme = $idFilme";
+
+        $retorno = mysqli_query($obj_conexao, $consulta);
+
+        $row = mysqli_fetch_assoc($retorno);
+
+        $idComentario = ($row["id"]);
+
+
+        if ($idComentario != null) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
-    } 
+    }
+
+    //Gera um array com os dados do filme
+    public function arrayFilme($strJson)
+    {
+        $arrayFilme = array();
+
+        if(isset($strJson->titulo)){
+            $titulo = $strJson->titulo;
+
+        }
+        else{
+
+            $titulo = $strJson->Title;
+        }
+
+        if(!isset($_POST["avaliacao"])){
+            $_POST["avaliacao"] = "OK";
+        }
+        //Verifica se o filme ja esta cadastrado nobanco
+        $cadastrado = $this->persisteFilme($titulo);
+
+
+        if (isset($strJson->id) && $cadastrado == true) {
+
+            //Monta um array com os dados do banco
+            $arrayFilme = [
+                "Title" => $strJson->titulo,
+                "avaliacao" => $_POST["avaliacao"],
+                "Poster" => $strJson->poster,
+                "Plot" => $strJson->descicao,
+                "Year" => $strJson->ano,
+                "Writer" => $strJson->escritor,
+                "Actors" => $strJson->ator,
+                "Language" => $strJson->idiomas,
+                "Awards" => $strJson->premios,
+                "Released" => $strJson->dataLancamento,
+                "Genre" => $strJson->genero,
+            ];
+        } else {
+
+            //Monta um array com os dados da API
+            $arrayFilme = [
+                "Title" => $strJson->Title,
+                "avaliacao" => $_POST["avaliacao"],
+                "Poster" => $strJson->Poster,
+                "Plot" => $strJson->Plot,
+                "Year" => $strJson->Year,
+                "Writer" => $strJson->Writer,
+                "Actors" => $strJson->Actors,
+                "Language" => $strJson->Language,
+                "Awards" => $strJson->Awards,
+                "Released" => $strJson->Released,
+                "Genre" => $strJson->Genre,
+            ];
+        }
+        //retrona um array com os dados do filme
+        return $arrayFilme;
+    }
+
+
+
+    public function arrayNomeUsuarios($idFilme)
+    {
+
+        $arrayIdUsuarios = $this->gerarIdUsario($idFilme);
+
+        for ($i = 0; $i < count($arrayIdUsuarios); $i++) {
+
+            $nomeUsuario[$i] = $this->buscarNomeUsuario($arrayIdUsuarios[$i]);
+
+        }
+
+        return serialize($nomeUsuario);
+    }
 
 }
 ?>

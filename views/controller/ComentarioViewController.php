@@ -15,68 +15,41 @@ $filme = new Filme();
 //converter os dados do json para um array, dados vem da tela Filme.php
 $dadosFilme = json_decode($_POST["dadosFilme"]);
 
-if (is_array($dadosFilme)) {
+//Monta um array com os dados do filme
+$arrayFilme = $filme->arrayFilme($dadosFilme);
 
-
-    $arrayFilme = [
-        "Title" => $dadosFilme[0]->titulo,
-        "avaliacao" => $_POST["avaliacao"],
-        "Poster" => $dadosFilme[0]->poster,
-        "Plot" => $dadosFilme[0]->descicao,
-        "Year" => $dadosFilme[0]->ano,
-        "Writer" => $dadosFilme[0]->escritor,
-        "Actors" => $dadosFilme[0]->ator,
-        "Language" => $dadosFilme[0]->idiomas,
-        "Awards" => $dadosFilme[0]->premios,
-        "Released" => $dadosFilme[0]->dataLancamento,
-        "Genre" => $dadosFilme[0]->genero,
-    ];
-} else {
-
-    $arrayFilme = [
-        "Title" => $dadosFilme->Title,
-        "avaliacao" => $_POST["avaliacao"],
-        "Poster" => $dadosFilme->Poster,
-        "Plot" => $dadosFilme->Plot,
-        "Year" => $dadosFilme->Year,
-        "Writer" => $dadosFilme->Writer,
-        "Actors" => $dadosFilme->Actors,
-        "Language" => $dadosFilme->Language,
-        "Awards" => $dadosFilme->Awards,
-        "Released" => $dadosFilme->Released,
-        "Genre" => $dadosFilme->Genre,
-    ];
-}
-
-
+//Armazena o titulo do filme
 $titulo = $arrayFilme["Title"];
+
+//Verifica se o filme ja esta cadastrado
+$persistir = $filme->persisteFilme($titulo);
 
 
 $persistiFilme = $filme->persisteFilme($titulo);
 
 if ($persistiFilme == false) {
 
+    //Cadastra o filme no banco de dados
     $filme->cadastrar($arrayFilme);
 
-    $retorno = $filme->exibir($titulo);
-
-    $retorno2 = serialize($retorno);
-
+    //Diz que o filme ja existe
     $valor = "false";
-
     setcookie("filmeNovo", $valor, time() + 6, "/");
-    setcookie("dadosFilme", $retorno2, time() + 6, "/");
 
 } else {
 
+    //Diz que o filme ja foi cadastrado
     $valor = "false";
-    $filmeCadastrado = $filme->exibir($titulo);
     setcookie("filmeNovo", $valor, time() + 6, "/");
 
-    $retorno = serialize($filmeCadastrado);
-    setcookie("dadosFilme", $retorno, time() + 6, "/");
-
 }
+
+//Retorna os dados do filme  
+$filmeCadastrado = $filme->exibir($titulo);
+
+//Armazena os dados do filme
+$retorno = serialize($filmeCadastrado[0]); //Serializa os dados
+setcookie("dadosFilme", $retorno, time() + 6, "/"); //Armazena os dados do filme em cookie
 
 //Classe usuario
 $usuario = new Usuario();
@@ -85,7 +58,7 @@ $usuario = new Usuario();
 $idUsuario = intval($_SESSION["idUsuario"]);
 
 //Pega o id do filme comentado
-$idFilme = $usuario->pegarIdFilme($titulo);
+$idFilme = $filme->pegarIdFilme($titulo);
 
 
 //Monta um array para popular os campos do método de comentar
@@ -99,93 +72,54 @@ $arrayComentario = [
 
 if (isset($_POST["atualizarComentario"])) {
 
+    //Busca o id do comentario
     $idComentario = $filme->buscarIdComentario($_SESSION["idUsuario"], $idFilme);
 
-    $atualizarComentario = $filme->atualizarComentario($_POST["comentario"], $idComentario,$_POST["avaliacao"]);
+    //Atualiza o comentario
+    $atualizarComentario = $filme->atualizarComentario($_POST["comentario"], $idComentario, $_POST["avaliacao"]);
 
+    //Retorna o comentario atualizado do usuario
     $comentario = $filme->pegarComentario($idFilme);
 
-    $comentario2 = serialize($comentario);
+    //Armazena os dados do comentario em cookie
+    setcookie("dadosComentario", serialize($comentario), time() + 6, "/");
 
-    $boleano = "true";
-    setcookie("usuarioComentou", $boleano, time() + 6, "/");
-    setcookie("dadosComentario", $comentario2, time() + 6, "/");
+
 } else {
 
+    //Faz o comentario
     $usuario->comentar($arrayComentario);
-
-
-    $comentario = $filme->pegarComentario($idFilme);
-
-    $comentario2 = serialize($comentario);
-
-    setcookie("dadosComentario", $comentario2, time() + 60, "/");
 }
 
+//Pega o texto de todos os comentario no filme
+$comentarios = serialize($filme->pegarComentario($idFilme));
 
-$idUsuarios = $filme->gerarIdUsario($idFilme);
+//Armazena o valor do texto dos comentario
+setcookie("dadosComentario", $comentarios, time() + 60, "/");
 
+//Pega o nome de todos os usuarios que comentaram no filme
+$arrayNomeUsuarios = $filme->arrayNomeUsuarios($idFilme);
 
-for ($i = 0; $i < count($idUsuarios); $i++) {
+//Armazena os nomes de usuarios que comentaram no filme em cookie
+setcookie("nomeUsuario", $arrayNomeUsuarios, time() + 6, "/");
 
-    $nomeUsuario[$i] = $filme->buscarNomeDeQuemComentou($idUsuarios[$i]);
-
-}
-
-
-$nomeUsuario2 = serialize($nomeUsuario);
-
-setcookie("nomeUsuario", $nomeUsuario2, time() + 6, "/");
-
-
+//Pega a avaliação de todos os usuarios que comentaram no filme
 $arrayAvaliacao = $filme->gerarAvaliacao($idFilme);
-$avaliacao = $filme->avaliar($arrayAvaliacao);
 
-setcookie("avaliacao", $avaliacao, time() + 6, "/");
+//Armazena a avaliação de usuarios que comentaram no filme em cookie
+setcookie("arrayAvaliacao", serialize($arrayAvaliacao), time() + 6, "/");
 
+//Calcular a media da avaliação do filme
+$mediaFilme = serialize($filme->calculaMediaFilme($arrayAvaliacao)); //calculo da media
+setcookie("mediaFilme", $mediaFilme, time() + 6, "/"); //Armazena os dados da avaliação media do filme em cookie
 
-$arrayAvaliacaoSerializado = serialize($arrayAvaliacao);
-setcookie("arrayAvaliacao", $arrayAvaliacaoSerializado, time() + 6, "/");
+//Comentario do usuario em sessão
+$usuarioTextoComentario = serialize($filme->comentarioUsuario($_SESSION["idUsuario"], $idFilme)); //Obtme o texto do comentario do usuario em sessão
+setcookie("dadosComentarioUsuarioAtual", $usuarioTextoComentario, time() + 6, "/"); //Armazena o texto do comentario do usuario em sessão em cookie
 
-
-
-
-
-$usuarioTextoComentario = ($filme->comentarioUsuario($_SESSION["idUsuario"], $idFilme));
-    setcookie("dadosComentarioUsuarioAtual", $usuarioTextoComentario, time() + 6, "/");
-
-if (isset($_POST["atualizarComentario"])) {
-
-    $usuarioComentou = $filme->usuarioComentou($_SESSION["idUsuario"], $idFilme);
-    $usuarioTextoComentario = ($filme->comentarioUsuario($_SESSION["idUsuario"], $idFilme));
-
-    setcookie("usuarioComentou", $usuarioComentou, time() + 6, "/");
-    
-    if ($usuarioComentou == "true") {
-        setcookie("comentarioUsuario", $usuarioTextoComentario, time() + 6, "/");
-    }
-}
-else{
-    $usuarioComentou = $filme->usuarioComentou($_SESSION["idUsuario"], $idFilme);
-    $usuarioTextoComentario = ($filme->comentarioUsuario($_SESSION["idUsuario"], $idFilme));
-
-    setcookie("usuarioComentou", $usuarioComentou, time() + 6, "/");
-
-    if ($usuarioComentou == "true") {
-        setcookie("comentarioUsuario", $usuarioTextoComentario, time() + 6, "/");
-    }
-    $valor = "true";
-    setcookie("comentarioUsuario", $usuarioTextoComentario, time() + 6, "/");
-    
-    setcookie("usuarioComentou", $valor, time() + 6, "/");
-
-}
-
-
-
-
-
-
+//Diz que o usuario comentou
+$boleano = "true";
+setcookie("usuarioComentou", $boleano, time() + 6, "/");
 
 //hedireciona para a tela de avaliação do filme
 header("Location: ../Filme.php");

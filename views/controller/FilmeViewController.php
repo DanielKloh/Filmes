@@ -9,104 +9,91 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/filmes/controller/FilmeController.php
 //converter os dados do json para um array
 $dadosFilme = json_decode($_POST["dadosFilme"]);
 
+//Armazena o nome do filme para posterior usu em diversos métodos
 $titulo = $dadosFilme->Title;
 
 $filme = new Filme();
 
-//Monta um array com os dados da API
-$arrayFilme = [
-    "Title" => $dadosFilme->Title,
-    "avaliacao" => "bom",
-    "Poster" => $dadosFilme->Poster,
-    "Plot" => $dadosFilme->Plot,
-    "Year" => $dadosFilme->Year,
-    "Writer" => $dadosFilme->Writer,
-    "Actors" => $dadosFilme->Actors,
-    "Language" => $dadosFilme->Language,
-    "Awards" => $dadosFilme->Awards,
-    "Released" => $dadosFilme->Released,
-    "Genre" => $dadosFilme->Genre,
-];
+//Monta um array com os dados do filme
+$arrayFilme = $filme->arrayFilme($dadosFilme);
 
+//Verifica se o filme ja esta cadastrado
 $persistir = $filme->persisteFilme($titulo);
 
+//Armazena o id do filme para posterior usu em diversos métodos
+$idFilme = $filme->pegarIdFilme($titulo);
+
+//Filme ja cadastrado
 if ($persistir == true) {
-    $valor = "false";
 
-    $retorno = $filme->exibir($titulo);
-    
-    $retorno = serialize($retorno);
+    //Armazena os dados do fime em cookie
+    $filmeCadastrado = $filme->exibir($titulo); //Traz os dados do filme
+    $retorno = serialize($filmeCadastrado[0]); //Serializa os dados do filme
+    setcookie("dadosFilme", $retorno, time() + 6, "/"); //Armazena esses dados em cookie por 6 segundos
+
+    //Busca o comentario do filme a armazena em cookie
+    $comentario = serialize($filme->pegarComentario($idFilme)); //Busca o comentario do banco e serializa ele     
+    setcookie("dadosComentario", $comentario, time() + 6, "/"); //Armazena os dados do comentario em cookie por 6 segundos
 
 
-    $idFilme = ($filme->pegarIdFilme($titulo));
-    $comentario = $filme->pegarComentario($idFilme);
-    
-    $comentario2 = serialize($comentario);
-    
-    
-    $idFilme = $filme->pegarIdFilme($titulo);
-    $idUsuarios = $filme->gerarIdUsario($idFilme);
-    
-    $nomeUsuario = array();
-    for ($i=0; $i < count($idUsuarios); $i++) {
-        
-        $nomeUsuario[$i] = $filme->buscarNomeDeQuemComentou($idUsuarios[$i]);
-        
-    }
-    
-    
-    $nomeUsuario2 =serialize($nomeUsuario);
-    
+    //Busca o comentario de todos os usuaries e armazena em cookie
+    $nomeUsuarios = $filme->arrayNomeUsuarios($idFilme); //Monta um array com o nome de todos os usuarios que comentaram no filme
+    setcookie("nomeUsuario", $nomeUsuarios, time() + 6, "/"); //Armazena em cookie o nome de todos os usuarios que comentaram nesse filme
+
+
+    //Busca a avaliação de todos os usuaries e armazena em cookie
     $arrayAvaliacao = $filme->gerarAvaliacao($idFilme);
-    $avaliacao = $filme->avaliar($arrayAvaliacao);
-    
     $arrayAvaliacaoSerializado = serialize($arrayAvaliacao);
+    setcookie("arrayAvaliacao", $arrayAvaliacaoSerializado, time() + 6, "/");
 
 
+    //Calcula a media da avaliação do filme
+    $mediaFilme = serialize($filme->calculaMediaFilme($arrayAvaliacao)); //calculo da media
+    setcookie("mediaFilme", $mediaFilme, time() + 6, "/"); //Armazena os dados da avaliação media do filme em cookie
 
-    setcookie("avaliacao",$avaliacao, time() + 6, "/");
-    setcookie("arrayAvaliacao",$arrayAvaliacaoSerializado, time() + 6, "/");
-    setcookie("nomeUsuario", $nomeUsuario2, time() + 60, "/");
-    setcookie("dadosFilme", $retorno,  time() + 600, "/");
-    setcookie("dadosComentario", $comentario2, time() + 6, "/");
+
+    //Diz que o filme ja existe no banco de dados
+    $valor = "false";
     setcookie("filmeNovo", $valor, time() + 6, "/");
+
 
 
 } else {
+    //Filme não cadastrado
 
+    //Armazena os dados do array de filmes
+    $arrayFilmeSerializado = serialize($arrayFilme); //Serializa os dados do array de filmes
+    setcookie("dadosFilme", $arrayFilmeSerializado, time() + 600, "/"); //Armazena os dados em cookie
+
+
+    //Diz que o filme não existe no banco de dados
     $valor = "true";
-
-    $dadosSerializados = serialize($arrayFilme);
-
-    setcookie("dadosFilme", $dadosSerializados, time() + 600, "/");
     setcookie("filmeNovo", $valor, time() + 6, "/");
+
 }
 
-if(isset($idFilme)){
+//verifica se existe comentario
+$verificarComentario = $filme->verificarComentario(intval($_SESSION["idUsuario"]), $idFilme);
 
-    $verificarComentario = $filme->verificarComentario(intval($_SESSION["idUsuario"]), $idFilme);
-}
-else{
-    $verificarComentario = false;
-}
+if ($verificarComentario == true) {
+    //Usuario ja comentou
 
+    //Busca comentarios
+    $usuarioTextoComentario = serialize($filme->comentarioUsuario($_SESSION["idUsuario"], $idFilme)); //Pega o texto do comentario
+    setcookie("dadosComentarioUsuarioAtual", $usuarioTextoComentario, time() + 6, "/"); //Armazena os comentarios em cookie
 
-if (isset($_POST["atualizarComentario"]) || $verificarComentario == true) {
+    // setcookie("comentarioUsuario", $usuarioTextoComentario, time() + 6, "/");
 
-    $usuarioComentou = $filme->usuarioComentou($_SESSION["idUsuario"], $idFilme);
-    $usuarioTextoComentario = ($filme->comentarioUsuario($_SESSION["idUsuario"], $idFilme));
-    setcookie("dadosComentarioUsuarioAtual", $usuarioTextoComentario, time() + 6, "/");
-
+    //Diz que o usuario ja tem um comentario no filme
+    $usuarioComentou = "true";
     setcookie("usuarioComentou", $usuarioComentou, time() + 6, "/");
 
-    if ($usuarioComentou == "true") {
-        setcookie("comentarioUsuario", $usuarioTextoComentario, time() + 6, "/");
-    }
+} else {
+    //Diz que o usuario nao comentou
+    $usuarioComentou = "false";
+    setcookie("usuarioComentou", $usuarioComentou, time() + 6, "/");
 }
-else{
-    $valor = "false";
-    setcookie("usuarioComentou", $valor, time() + 6, "/");
 
-}
+//Retorna para a pagina de filme
 header("Location: /Filmes/views/Filme.php");
 ?>

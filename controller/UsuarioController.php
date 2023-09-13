@@ -34,29 +34,6 @@ class Usuario
     }
 
 
-    //?
-    public function pegarIdFilme($nomeFilme)
-    {
-
-        $conexao = new Sql();
-        $obj_conexao = $conexao->conectar();
-
-        $id = "SELECT id FROM filme WHERE titulo = '$nomeFilme'";
-
-        $resultado = mysqli_query($obj_conexao, $id);
-
-
-        $row = mysqli_fetch_assoc($resultado);
-
-        $idFilme = intval($row['id']); 
-        
-        mysqli_free_result($resultado); 
-
-        return $idFilme;
-
-    }
-
-
 }
 
 ?>
