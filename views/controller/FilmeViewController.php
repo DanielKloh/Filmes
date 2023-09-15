@@ -42,7 +42,7 @@ if ($persistir == true) {
 
 
     //Busca a avaliação de todos os usuaries e armazena em cookie
-    $arrayAvaliacao = $filme->gerarAvaliacao($idFilme);
+    $arrayAvaliacao = $filme->buscarAvaliacao($idFilme);
     $arrayAvaliacaoSerializado = serialize($arrayAvaliacao);
     setcookie("arrayAvaliacao", $arrayAvaliacaoSerializado, time() + 6, "/");
 
@@ -63,7 +63,7 @@ if ($persistir == true) {
 
     //Armazena os dados do array de filmes
     $arrayFilmeSerializado = serialize($arrayFilme); //Serializa os dados do array de filmes
-    setcookie("dadosFilme", $arrayFilmeSerializado, time() + 600, "/"); //Armazena os dados em cookie
+    setcookie("dadosFilme", $arrayFilmeSerializado, time() + 6, "/"); //Armazena os dados em cookie
 
 
     //Diz que o filme não existe no banco de dados

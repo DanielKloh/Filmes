@@ -37,7 +37,7 @@ require_once("layout/header.php");
     $dadosFilme = unserialize($dadosSemBarra);
 
 
-    if ($_COOKIE['filmeNovo'] == "true") {
+    if ($_COOKIE['filmeNovo'] == "true" && isset($dadosFilme["Title"])) {
 
         //Monta todo o cantainer com os dados do filme na tela que estao no banco(Os dados do banco estao em portugues)
         $filmeConteiner = '
@@ -231,6 +231,7 @@ style="height: 100px"></textarea>';
 
         <!-- Manda os dados do fime para a controller para futuro cadastro de filme -->
         <?php
+        
         if (isset($dadosFilme)) {
             echo "<input type='hidden' value='" . json_encode($dadosFilme) . "' name='dadosFilme' id='dadosFilme'>";
         } else {
@@ -242,9 +243,10 @@ style="height: 100px"></textarea>';
 
             echo '<button type="submit" class="btn btn-primary mt-4" onclick="popularInput()">Comentar</button>';
         } else {
-
-            echo '<button type="submit" class="btn btn-danger mt-4" onclick="popularInput()">apagar</button>';
-            echo '<button type="submit" class="btn btn-warning mt-4" onclick="popularInput()">editar</button>';
+            echo '<button type="submit" class="btn btn-danger mt-4" onclick="popularInput()">Atualizar</button>';
+            echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Deletar 
+          </button>';
         }
 
         ?>
@@ -258,6 +260,30 @@ style="height: 100px"></textarea>';
 
 
 
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="color: #000">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Deletar Comentario</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body"style="color: #000">
+                    Tem certesa de que deseja deletar seu comentario?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <form action="./controller/ComentarioViewController.php" method="POST">
+                        <?php
+                        echo "<input type='hidden' value='" . json_encode($dadosFilmeExistente) . "' name='dadosFilme' id='dadosFilme'>";
+                        echo '<input type="hidden" name="idFilme" value="'.$dadosFilmeExistente["id"].'">';        
+                        echo '<button type="submit" class="btn btn-primary">Deletar</button>'
+                        ?>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <?php
@@ -292,14 +318,14 @@ style="height: 100px"></textarea>';
     ?>
 
 
-
-
-
     <?php
     //Chama o footer
     require_once("layout/footer.php");
 
     ?>
+
+
+
 
 
 
