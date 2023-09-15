@@ -97,7 +97,7 @@ require_once("layout/header.php");
                 class="card-img-top" alt="capa do filme">
         </div>
 
-        <div class="dadosFilmeExistente">
+        <div class="dadosFilme">
             <div class="d-flex mb-3 mt-3">
                 <p class="FilmeAno">Year: ' . $dadosFilmeExistente["ano"] . '</p>
                 <p class="FilmeRatings">Ratings: ' . round(unserialize($_COOKIE["mediaFilme"]), 1) . ' /10 </p>
@@ -179,8 +179,8 @@ require_once("layout/header.php");
             }
             ?>
 
-            <select name="avaliacao" class="selecionar text-center" style="width: 150px;">
-                <option selected>Selecionar</option>
+            <select id="avaliacao" name="avaliacao" class="selecionar text-center" style="width: 150px;">
+                <option selected value="selecionar">Selecionar</option>
                 <option value="Muito Ruim">Muito Ruim</option>
                 <option value="Ruim">Ruim</option>
                 <option value="OK">OK</option>
@@ -199,13 +199,14 @@ style="height: 100px"></textarea>';
             echo '        <textarea id="texto" class="form-control textoComentario" placeholder="Comentario"
     style="height: 100px">' . $comentario . '</textarea>
     
-    <input type="hidden" name="atualizarComentario" value"' . $_COOKIE['dadosComentarioUsuarioAtual'] . '"/>
+    <input type="hidden" name="atualizarComentario" value"' . $_COOKIE['dadosComentarioUsuarioAtual'] . '">
     ';
 
         }
 
         ?>
         <script>
+
 
             let textarea = document.getElementById("texto");
 
@@ -218,12 +219,40 @@ style="height: 100px"></textarea>';
                 input.setAttribute("value", texto);
             }
 
-            function dadosFIlme() {
-                let dadosFilme = document.getElementById("dadosFilme");
-                console.log(dadosFilme);
+            function contarCaractere(comentario) {
+
+                if (comentario.length > 270) {
+                    return false;
+                }
+                else {
+                    return true;
+                }
+
             }
 
+            function verificarAvaliacao() {
 
+                let avaliacao = document.getElementById("avaliacao");
+
+
+                let caracteres = contarCaractere(textarea.value);
+
+                if (caracteres === false) {
+                    alert("Você exedeou o limite de caracteres do seu comentario");
+                }
+
+                else if (avaliacao.value === "selecionar") {
+                    alert("Preencha o campo avaliação");
+
+
+                } else {
+                    let btn = document.getElementById("btn");
+
+                    btn.setAttribute("type", "submit");
+                    popularInput();
+                }
+
+            }
 
         </script>
 
@@ -231,7 +260,7 @@ style="height: 100px"></textarea>';
 
         <!-- Manda os dados do fime para a controller para futuro cadastro de filme -->
         <?php
-        
+
         if (isset($dadosFilme)) {
             echo "<input type='hidden' value='" . json_encode($dadosFilme) . "' name='dadosFilme' id='dadosFilme'>";
         } else {
@@ -241,10 +270,10 @@ style="height: 100px"></textarea>';
 
         if (isset($_COOKIE["usuarioComentou"]) && $_COOKIE["usuarioComentou"] == "false") {
 
-            echo '<button type="submit" class="btn btn-primary mt-4" onclick="popularInput()">Comentar</button>';
+            echo '<button id="btn" type="button" class="btn btn-primary mt-4" onclick="verificarAvaliacao()">Comentar</button>';
         } else {
-            echo '<button type="submit" class="btn btn-danger mt-4" onclick="popularInput()">Atualizar</button>';
-            echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            echo '<button id="btn" type="button" class="btn btn-atualizar mt-4" onclick="verificarAvaliacao()">Atualizar</button>';
+            echo '<button id="btn" type="button" class="btn btn-primary mt-4 " data-bs-toggle="modal" data-bs-target="#exampleModal">
             Deletar 
           </button>';
         }
@@ -268,17 +297,17 @@ style="height: 100px"></textarea>';
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Deletar Comentario</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body"style="color: #000">
+                <div class="modal-body" style="color: #000">
                     Tem certesa de que deseja deletar seu comentario?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-atualizar" data-bs-dismiss="modal">Cancelar</button>
                     <form action="./controller/ComentarioViewController.php" method="POST">
                         <?php
                         echo "<input type='hidden' value='" . json_encode($dadosFilmeExistente) . "' name='dadosFilme' id='dadosFilme'>";
-                        echo '<input type="hidden" name="idFilme" value="'.$dadosFilmeExistente["id"].'">';        
+                        echo '<input type="hidden" name="idFilme" value="' . $dadosFilmeExistente["id"] . '">';
                         echo '<button type="submit" class="btn btn-primary">Deletar</button>'
-                        ?>
+                            ?>
                     </form>
                 </div>
             </div>
