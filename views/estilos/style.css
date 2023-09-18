@@ -186,7 +186,27 @@ input {
     border-radius: 15px;
 }
 
-.card {
+
+.containerCard{
+    width: 100vw;
+}
+.card{
+    border: none;
+    padding: 20px;
+    background-color: #030F26;
+    color: #D9D9D9;
+    cursor: pointer;
+    flex: 1 1 24%;
+    width: 25%;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+.containerCard  {
+justify-content:  center;
+text-align: center;
+  }
+.card-pesquisa{
     border: none;
     padding: 20px;
     background-color: #030F26;
@@ -297,6 +317,7 @@ input {
     height: auto;
     border-radius: 20px;
 }
+
 
 .avaliacao {
     font-weight: 400;
@@ -476,12 +497,29 @@ display: flex;
 
     /* Home */
     .containerCard {
+        text-align: center;
         display: block;
         text-align: center;
         margin: auto;
         margin-bottom: 30px;
         padding: 35px;
         width: 80%;
+       padding-bottom: 0;
+       padding-top: 0;
+    }
+    .containerCard img{
+        width: 200px;
+        height: 300px;
+        margin:auto;
+    }
+    .card-body{
+        width: 200px;
+        margin: auto;
+    }
+    .card {
+        width: 100%;
+        margin-top: 20px;
+        text-align: center;
     }
 
     .card-text {

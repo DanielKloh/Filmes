@@ -1,8 +1,8 @@
 //fazer toda a logica da avaliação funcionar.
 
-desabilitar o botao de comentar se ja tiver comentado
+//desabilitar o botao de comentar se ja tiver comentado
 
-habilitar um botao de editar comentario e excluir comentario
+//habilitar um botao de editar comentario e excluir comentario
 
 botao de logar e sair
 

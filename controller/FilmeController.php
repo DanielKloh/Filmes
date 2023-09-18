@@ -291,7 +291,7 @@ class Filme
         if (!isset($_POST["avaliacao"])) {
             $_POST["avaliacao"] = "OK";
         }
-        
+
         //Verifica se o filme ja esta cadastrado nobanco
         $cadastrado = $this->persisteFilme($titulo);
 
@@ -408,7 +408,7 @@ class Filme
 
         //Consulta MySql
         $delete = "DELETE FROM comentario WHERE id = $idComentario";
-       mysqli_query($obj_conexao, $delete);
+        mysqli_query($obj_conexao, $delete);
 
 
         $filme = $this->verificarComentarioExistente($idFilme);
@@ -422,7 +422,7 @@ class Filme
             mysqli_query($obj_conexao, $deleteFilme);
         }
         //faz o delete
- 
+
 
         //da um retorno verdadeiro confirmando o update
         return true;
@@ -450,6 +450,33 @@ class Filme
         }
 
     }
+
+
+    //Parte oficial da classe filme:
+
+    public function arrayFilmesPopulares()
+    {
+
+        $sql = new Sql();
+        $obj_conexao = $sql->conectar();
+
+        $consulta = "SELECT * FROM filme";
+
+        $resultado = mysqli_query($obj_conexao, $consulta);
+
+
+        //Armazena a avaliação em um array
+        $data = array();
+        while ($row = mysqli_fetch_assoc($resultado)) {
+            $data[] = $row;
+        }
+
+        return $data;
+    }
+
+
+
+
 
 
 }

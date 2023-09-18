@@ -144,7 +144,7 @@ require_once("layout/header.php");
 
     $usuarioComentou = false;
 
-    if (isset($_COOKIE["nomeUsuario"])) {
+    if (isset($_COOKIE["nomeUsuario"]) && isset($_SESSION["nomeUsuario"])) {
         $nomes = unserialize($_COOKIE["nomeUsuario"]);
 
         for ($i = 0; $i < count($nomes); $i++) {
@@ -153,11 +153,6 @@ require_once("layout/header.php");
                 $suarioComentou = true;
             }
         }
-    }
-
-
-    if ($usuarioComentou == false) {
-
     }
 
 

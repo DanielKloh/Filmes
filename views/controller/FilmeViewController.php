@@ -9,22 +9,39 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/filmes/controller/FilmeController.php
 //converter os dados do json para um array
 $dadosFilme = json_decode($_POST["dadosFilme"]);
 
-//Armazena o nome do filme para posterior usu em diversos métodos
-$titulo = $dadosFilme->Title;
 
 $filme = new Filme();
 
+if (isset($_POST["tituloFilmeExisternte"])) {
+    //Armazena o id do filme para posterior usu em diversos métodos
+    $idFilme = $filme->pegarIdFilme($_POST["tituloFilmeExisternte"]);
+
+    $titulo = $_POST["tituloFilmeExisternte"];
+} else {
+
+
+    //Armazena o nome do filme para posterior usu em diversos métodos
+    $titulo = $dadosFilme->Title;
+    
+    //Armazena o id do filme para posterior usu em diversos métodos
+    $idFilme = $filme->pegarIdFilme($titulo);
+}
 //Monta um array com os dados do filme
 $arrayFilme = $filme->arrayFilme($dadosFilme);
 
 //Verifica se o filme ja esta cadastrado
 $persistir = $filme->persisteFilme($titulo);
 
-//Armazena o id do filme para posterior usu em diversos métodos
-$idFilme = $filme->pegarIdFilme($titulo);
+
+
+
 
 //Filme ja cadastrado
 if ($persistir == true) {
+
+
+
+
 
     //Armazena os dados do fime em cookie
     $filmeCadastrado = $filme->exibir($titulo); //Traz os dados do filme

@@ -30,7 +30,7 @@
     <div class="menuLateral colapsedMenu" id="menu">
         <ul class="navbar-nav">
             <li class="">
-                <a class="nav-link mb-4" id="paginaInicio" href="Home.php">Inicio</a>
+                <a class="nav-link mb-4" id="paginaInicio" href="/controller/HomeViewController.php">Inicio</a>
             </li>
             <li class="">
                 <a class="nav-link mb-4" href="meusFilmes.php">Meus Filmes</a>
