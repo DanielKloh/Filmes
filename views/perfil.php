@@ -10,9 +10,24 @@ require_once("layout/header.php");
 <body>
 
     <?php
+     session_start();
+
     //Chama a navbar
     require_once("layout/navbar.php");
 
+$dadosUsuario = unserialize($_COOKIE["dadosUsuario"]);
+
+
+if($dadosUsuario["nome"] == "x"){
+    echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    Você não está cadastrado na plataforma <a href="/cadastro.php">clique aqui para se registrar</a>.
+   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+ </div>';
+
+ $botoes = "";
+}
+else $botoes = '            <a class="btn btn-primary" href="editarDados.php">Editar Dados</a>
+<a href="AlterarSenha.php" class="btn btn-primary">Alterar Senha</a>';
     ?>
 
 
@@ -24,12 +39,13 @@ require_once("layout/header.php");
 
                 <div class="dadoUsuario mb-5">
                     <span>Nome de Usuario</span>
-                    <label>Daniel Kloh</label>
+                    <?php echo'<label>'.$dadosUsuario["nome"].'</label>'; ?>
+                    
                 </div>
 
                 <div class="dadoUsuario mb-5">
                     <span>Email</span>
-                    <label>Danie.master@gmail.com</label>
+                    <?php echo'<label>'.$dadosUsuario["email"].'</label>'; ?>
                 </div>
 
 
@@ -37,22 +53,21 @@ require_once("layout/header.php");
             <div class="dadoUsuarioContainer">
                 <div class="dadoUsuario mb-5">
                     <span>Telefone</span>
-                    <label>+51 940028922</label>
+                    <?php echo'<label>'.$dadosUsuario["telefone"].'</label>'; ?>
                 </div>
                 <div class="dadoUsuario mb-5">
                     <span>Data de nascimento</span>
-                    <label>28/12/2004</label>
+                    <?php echo'<label>'.$dadosUsuario["dataNascimento"].'</label>'; ?>
                 </div>
 
                 <div class="dadoUsuario mb-5">
                     <span>Genero</span>
-                    <label>Mascolino</label>
+                    <?php echo'<label>'.$dadosUsuario["genero"].'</label>'; ?>
                 </div>
             </div>
         </div>
         <div class="botaoFormulario mb-5">
-            <a class="btn btn-primary" href="editarDados.php">Editar Dados</a>
-            <a href="AlterarSenha.php" class="btn btn-primary">Alterar Senha</a>
+                <?php echo $botoes?>
         </div>
 
         <?php

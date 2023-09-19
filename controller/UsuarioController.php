@@ -18,7 +18,6 @@ class Usuario
 
     public function comentar($array)
     {
-
         $conexao = new Sql();
         $obj_conexao = $conexao->conectar();
 
@@ -31,6 +30,67 @@ class Usuario
 
         return $obj_conexao->query($insert);
 
+    }
+
+
+    public function cadastrarUsuario($array){
+        $conexao = new Sql();
+        $obj_conexao = $conexao->conectar();
+
+        $nome = $array['nome'];
+        $email = $array['email'];
+        $senha = $array['senha'];
+        $telefone = $array['telefone'];
+        $genero = $array['genero'];
+        $dataNascimento = $array["dataNascimento"];
+
+        $insert = "INSERT INTO usuario VALUES (null,'$nome', '$email', '$senha',$telefone,'$genero','$dataNascimento')";
+        
+        $obj_conexao->query($insert);
+
+        $retorno = $this->login($email,$senha);
+        
+        return $retorno;
+    }
+
+
+
+    public function editarDados($array, $idUsuario)
+    {
+        $conexao = new Sql();
+        $obj_conexao = $conexao->conectar();
+
+        $nome = $array['nome'];
+        $email = $array['email'];
+        $genero = $array['genero'];
+        $dataNascimento = $array['dataNascimento'];
+        $telefone = $array['telefone'];
+
+        $update = "UPDATE usuario SET  nome = '$nome', email = '$email', genero = '$genero',dataNascimento = '$dataNascimento', telefone = $telefone WHERE id = $idUsuario";
+
+        //faz o update
+        $obj_conexao->query($update);
+
+        //da um retorno verdadeiro confirmando o update
+        return true;
+    }
+
+    public function buscarDados($idUsuario)
+    {
+
+        $conexao = new Sql();
+        $obj_conexao = $conexao->conectar();
+
+        $consulta = "SELECT * FROM usuario WHERE id = '$idUsuario'";
+
+        $retorno = mysqli_query($obj_conexao, $consulta);
+        //Armazena a avaliação em um array
+        $data = array();
+        while ($row = mysqli_fetch_assoc($retorno)) {
+            $data[] = $row;
+        }
+
+        return $data[0];
     }
 
 

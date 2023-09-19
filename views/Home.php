@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 
-<?php
+<?php    session_start();
 //Chama o header da tela
 require_once("layout/header.php");
 
@@ -13,7 +13,7 @@ require_once("layout/header.php");
     //Chama a navbar
     require_once("layout/navbar.php");
 
-    session_start();
+
     if (isset($_SESSION["idUsuario"])) {
         echo $_SESSION["idUsuario"];
     } else {

@@ -4,7 +4,7 @@
 <?php
 //Chama o header da tela
 require_once("layout/header.php");
-include("../controller/conexao.php");
+
 ?>
 
 <body>
@@ -13,26 +13,26 @@ include("../controller/conexao.php");
 
     <div class="containerRegistro">
 
-        <form class="row g-3 need-validation justify-content needs-validation" action="../controller/conexao.php">
+        <form  action="./controller/UsuarioViewController.php" method="POST" class="row g-3 need-validation justify-content needs-validation">
             <div class="col-md-5">
                 <label for="inputEmail4" class="form-label">Nome de Usuário</label>
-                <input type="text" class="form-control" id="inputEmail4" placeholder="Nome de Usuário*" required>
+                <input name="nome" type="text" class="form-control" id="inputEmail4" placeholder="Nome de Usuário*" required>
             </div>
             <div class="col-md-5">
                 <label for="inputPassword4" class="form-label">Email</label>
-                <input type="email" class="form-control" id="inputPassword4" placeholder="Email*" required>
+                <input name="email" type="email" class="form-control" id="inputPassword4" placeholder="Email*" required>
             </div>
             <div class="col-md-5">
                 <label for="inputAddress" class="form-label">Senha</label>
-                <input type="password" class="form-control" id="inputAddress" placeholder="Senha*" required>
+                <input name="senha" type="password" class="form-control" id="inputAddress" placeholder="Senha*" required>
             </div>
             <div class="col-md-5">
                 <label for="inputAddress2" class="form-label">Telefone</label>
-                <input type="text" class="form-control" id="inputAddress2" placeholder="Telefone*" required>
+                <input name="telefone" type="text" class="form-control" id="inputAddress2" placeholder="Telefone*" required>
             </div>
             <div class="col-md-5">
                 <label for="inputCity" class="form-label">Data de Nascimento</label>
-                <input type="date" class="form-control" id="inputCity">
+                <input name="dataNascimento" type="date" class="form-control" id="inputCity">
             </div>
 
             <div class="form-check form-check-inline col-md-5">
@@ -50,12 +50,13 @@ include("../controller/conexao.php");
                     <input class="form-check-input" type="radio" name="genero" id="inlineRadio3" value="Outro">
                     <label class="form-check-label" for="inlineRadio3">Outro</label>
                 </div>
-
+<input type="hidden" name="acao" value="cadastrar">
 
             </div>
                 <div class="botaoFormulario">
-                    <a href="login.php" class="btn btn-primary mb-3">Tenho conta</button>
-                    <a href="Home.php" class="btn btn-primary mb-3">Cadastrar</a>
+                    <a href="login.php" class="btn btn-primary mb-3">Tenho conta</a>
+                    
+                    <button type="submit" class="btn btn-primary mb-3">Cadastrar</button>
                 </div>
         </form>
 

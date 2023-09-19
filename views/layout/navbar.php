@@ -4,17 +4,34 @@
         <div class="collapse navbar-collapse navbarBotoes" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="">
-                    <a class="nav-link" id="paginaInicio" href="Home.php">Inicio</a>
+                    <a class="nav-link" id="paginaInicio" href="./controller/HomeViewController.php">Inicio</a>
                 </li>
                 <li class="">
                     <a class="nav-link" href="meusFilmes.php">Meus Filmes</a>
                 </li>
                 <li class="">
-                    <a class="nav-link" href="perfil.php">Meu Perfil</a>
+                    <a class="nav-link" href="./controller/PerfilViewController.php">Meu Perfil</a>
                 </li>
+                <?php
+               
+                if (isset($_SESSION["idUsuario"])) {
+                    echo '                
                 <li class="">
-                    <a class="nav-link" href="login.php">Sair</a>
-                </li>
+                <form action="./controller/UsuarioViewController.php" method="POST">
+                    <input type="hidden" name="acao" value="deslogar">
+                    <button type="submit" class="nav-link">Sair</button>
+                </form>
+                </li>';
+                } else {
+                    echo '
+                <li class="">
+                    <a class="nav-link" href="login.php">Entrar</a>
+                </li>';
+                }
+                ?>
+
+
+
             </ul>
         </div>
     </div>
@@ -30,18 +47,32 @@
     <div class="menuLateral colapsedMenu" id="menu">
         <ul class="navbar-nav">
             <li class="">
-                <a class="nav-link mb-4" id="paginaInicio" href="/controller/HomeViewController.php">Inicio</a>
+                <a class="nav-link mb-4" id="paginaInicio" href="./controller/HomeViewController.php">Inicio</a>
             </li>
             <li class="">
-                <a class="nav-link mb-4" href="meusFilmes.php">Meus Filmes</a>
+                <a class="nav-link mb-4" href="./controller/PerfilViewController.php">Meus Filmes</a>
             </li>
             <li class="">
                 <a class="nav-link mb-4" href="perfil.php">Meu Perfil</a>
-                </li>
-                <li class="">
-                    <a class="nav-link mb-4" href="login.php">Sair</a>
-                </li>
-            </ul>
-        </div>
+            </li>
+            <?php
+
+            if (isset($_SESSION["idUsuario"])) {
+                echo '                
+<li class="">
+<form action="./controller/UsuarioViewController.php" method="POST">
+    <input type="hidden" name="acao" value="deslogar">
+    <button type="submit" class="nav-link">Sair</button>
+</form>
+</li>';
+            } else {
+                echo '
+<li class="">
+    <a class="nav-link" href="login.php">Entrar</a>
+</li>';
+            }
+            ?>
+        </ul>
     </div>
+</div>
 <script src="scripts/navbar.js"></script>
