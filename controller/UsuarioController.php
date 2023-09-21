@@ -33,7 +33,8 @@ class Usuario
     }
 
 
-    public function cadastrarUsuario($array){
+    public function cadastrarUsuario($array)
+    {
         $conexao = new Sql();
         $obj_conexao = $conexao->conectar();
 
@@ -45,11 +46,11 @@ class Usuario
         $dataNascimento = $array["dataNascimento"];
 
         $insert = "INSERT INTO usuario VALUES (null,'$nome', '$email', '$senha',$telefone,'$genero','$dataNascimento')";
-        
+
         $obj_conexao->query($insert);
 
-        $retorno = $this->login($email,$senha);
-        
+        $retorno = $this->login($email, $senha);
+
         return $retorno;
     }
 
@@ -81,7 +82,7 @@ class Usuario
         $conexao = new Sql();
         $obj_conexao = $conexao->conectar();
 
-        $consulta = "SELECT * FROM usuario WHERE id = '$idUsuario'";
+        $consulta = "SELECT * FROM usuario WHERE id = $idUsuario";
 
         $retorno = mysqli_query($obj_conexao, $consulta);
         //Armazena a avaliação em um array
@@ -92,6 +93,81 @@ class Usuario
 
         return $data[0];
     }
+
+
+    //Busca todos os fimes em que o usuario comentou
+    public function filmesUsuario($idUsuario)
+    {
+        //Conexao com o banco de dados
+        $conexao = new Sql();
+        $obj_conexao = $conexao->conectar();
+
+        $idFilmes = $this->idFilme($idUsuario);
+
+        $data = array();
+
+        for ($i = 0; $i < count($idFilmes); $i++) {
+
+            $consulta = "SELECT titulo FROM filme WHERE id = $idFilmes[$i]";
+
+            $resultado = mysqli_query($obj_conexao, $consulta);
+
+            $row = mysqli_fetch_assoc($resultado);
+            $data[] = $row["titulo"];
+        }
+        return $data;
+    }
+
+
+    public function idFilme($idUsuario)
+    {
+        //Conexao com o banco de dados
+        $conexao = new Sql();
+        $obj_conexao = $conexao->conectar();
+
+        //Consulta SQL
+        $consulta = "SELECT idFilme FROM comentario WHERE idUsuario = $idUsuario";
+
+        $retorno = mysqli_query($obj_conexao, $consulta);
+
+        $data = array();
+
+        while ($row = mysqli_fetch_assoc($retorno)) {
+            $data[] = $row['idFilme'];
+        }
+
+
+        return $data;
+    }
+    //Busca todas as avaliações dos filmes em que o usuario comentou
+    public function avaliacoesUsuario($idUsuario)
+    {
+
+        //Conexao com o banco de dados
+        $conexao = new Sql();
+        $obj_conexao = $conexao->conectar();
+
+        $idFilmes = $this->idFilme($idUsuario);
+
+        $data = array();
+
+        for ($i = 0; $i < count($idFilmes); $i++) {
+
+            $consulta = "SELECT avaliacao FROM comentario WHERE idFilme = $idFilmes[$i]";
+
+            $resultado = mysqli_query($obj_conexao, $consulta);
+
+            $row = mysqli_fetch_assoc($resultado);
+
+            $data[] = $row["avaliacao"];
+        }
+
+        return $data;
+    }
+
+
+
+
 
 
 }

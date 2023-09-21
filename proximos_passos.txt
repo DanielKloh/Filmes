@@ -4,13 +4,13 @@
 
 //habilitar um botao de editar comentario e excluir comentario
 
-botao de logar e sair
+//botao de logar e sair
 
-ajeitar a navbar e o footer
+//editar dados do usuario
 
-cadastrar usuario
+//cadastrar usuario
 
-editar dados do usuario
+ajeitar a navbar, footer e o layout da home
 
 esqueceu a senha
 

@@ -7,7 +7,7 @@
                     <a class="nav-link" id="paginaInicio" href="./controller/HomeViewController.php">Inicio</a>
                 </li>
                 <li class="">
-                    <a class="nav-link" href="meusFilmes.php">Meus Filmes</a>
+                    <a class="nav-link" href="./controller/MeusFilmesViewController.php">Meus Filmes</a>
                 </li>
                 <li class="">
                     <a class="nav-link" href="./controller/PerfilViewController.php">Meu Perfil</a>

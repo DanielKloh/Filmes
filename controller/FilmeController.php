@@ -454,26 +454,41 @@ class Filme
 
     //Parte oficial da classe filme:
 
-    public function arrayFilmesPopulares()
+    public function arrayTituloFilme()
     {
 
         $sql = new Sql();
         $obj_conexao = $sql->conectar();
 
-        $consulta = "SELECT * FROM filme";
+        $consulta = "SELECT titulo FROM filme";
 
         $resultado = mysqli_query($obj_conexao, $consulta);
 
 
-        //Armazena a avaliação em um array
         $data = array();
         while ($row = mysqli_fetch_assoc($resultado)) {
-            $data[] = $row;
+            $data[] = $row["titulo"];
         }
 
         return $data;
     }
 
+    public function arrayPosterFilme(){
+        $sql = new Sql();
+        $obj_conexao = $sql->conectar();
+
+        $consulta = "SELECT poster FROM filme";
+
+        $resultado = mysqli_query($obj_conexao, $consulta);
+
+
+        $data = array();
+        while ($row = mysqli_fetch_assoc($resultado)) {
+            $data[] = $row["poster"];
+        }
+
+        return $data;
+    }
 
 
 

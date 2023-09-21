@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 
-<?php    session_start();
+<?php session_start();
 //Chama o header da tela
 require_once("layout/header.php");
 
@@ -101,7 +101,8 @@ require_once("layout/header.php");
         echo "<h2 class='mt-5 filmesPopulares'> Filmes mais populares</h2>";
         //faz o selcet do banco
     
-        $arrayFilmesPopulares = unserialize($_COOKIE['arrayFilmesPopulares']);
+        $arrayTitulos = (unserialize($_COOKIE["arrayTitulo"]));
+        $arrayPoster = (unserialize($_COOKIE["arrayPoster"]));
 
         function removerBarraInvertida($string)
         {
@@ -110,23 +111,32 @@ require_once("layout/header.php");
             return $novaString;
         }
 
-        $dadosFilme = removerBarraInvertida($arrayFilmesPopulares);
+        $arrayTitulosSemBarra = removerBarraInvertida($arrayTitulos);
+        $arrayPosterSemBaraa = removerBarraInvertida($arrayPoster);
 
-        for ($i = 0; $i < 5; $i++) {
+        var_dump($arrayTitulosSemBarra);
+
+
+
+
+        $qtdFilmes = count($arrayPosterSemBaraa)/4;
+        $count = 0;
+        for ($i = 0; $i < count($arrayPosterSemBaraa); $i++) {
 
             echo '<div class="container  containerCard">';
 
-            for ($j = 0; $j < 4; $j++) {
+            for ($j = 0; $j < $qtdFilmes; $j++) {
                 echo '
                     <div class="card"  >
-                    <img src="' . $dadosFilme["poster"] . '" class="card-img-top" alt="capa do filme">
+                    <img src="' . $arrayPosterSemBaraa[$count] . '" class="card-img-top" alt="capa do filme">
                             <div class="card-body text-center">
                                 <form method="POST" action="./controller/FilmeViewController.php">
-                                    <button class="tituloPoster">' . $dadosFilme["titulo"] . ' </button>
-                                    <input type="hidden" name="tituloFilmeExisternte" value="' . $dadosFilme["titulo"] . '"/>
+                                    <button class="tituloPoster">' . $arrayTitulosSemBarra[$count] . ' </button>
+                                    <input type="hidden" name="tituloFilmeExisternte" value="' . $arrayTitulosSemBarra[$count   ] . '"/>
                                 </form>
                             </div>
                     </div>';
+                    $count ++;
             }
 
             echo '</div>';

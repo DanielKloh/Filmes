@@ -75,17 +75,24 @@ if (isset($_POST["atualizarComentario"])) {
     //Diz que o filme ja existe
     $valor = "false";
 
-} else if (isset($_POST["idFilme"])) {
+} else if (isset($_POST["idFilme"]) || isset($_POST["dadosFilmeDeletar"])) {
 
+
+   if(isset($_POST["dadosFilmeDeletar"])){
+
+       $idFilme = $filme->pegarIdFilme($_POST["dadosFilmeDeletar"]);
+    }
+
+    
+    
     //Busca o id do comentario
     $idComentario = $filme->buscarIdComentario($_SESSION["idUsuario"], $idFilme);
 
     $deletar = $filme->deletarComentario($idComentario, $idFilme);
+    
     //Diz que o usuario comentou
     $boleano = "false";
-
-
-
+ 
     //Verifica se o filme ja esta cadastrado
     $persistir = $filme->persisteFilme($titulo);
 
@@ -97,11 +104,7 @@ if (isset($_POST["atualizarComentario"])) {
     else{
         $valor = "false";
     }
-
-
-
-
-
+    
 } else {
 
     //Monta um array para popular os campos do método de comentar
@@ -156,7 +159,10 @@ if ($arrayNomeUsuarios != false) {
 
 setcookie("usuarioComentou", $boleano, time() + 6, "/");
 
-
+if(isset($_POST["dadosFilmeDeletar"])){    
+    
+    header("Location: ./meusFilmesViewController.php");exit;
+}
 //hedireciona para a tela de avaliação do filme
 header("Location: ../Filme.php");
 ?>

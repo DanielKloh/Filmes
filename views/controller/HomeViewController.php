@@ -10,16 +10,12 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/filmes/controller/FilmeController.php
 $filme = new Filme();   
 
 
-$arrayFilmesPopulares = $filme->arrayFilmesPopulares();
+$arrayTitulo = $filme->arrayTituloFilme();
 
-$array = array();
+$arrayPoster = $filme->arrayPosterFilme();
 
-for ($i=0; $i < count($arrayFilmesPopulares); $i++) { 
-    $array[$i] = serialize($arrayFilmesPopulares[$i]);
-}
-
-
-setcookie("arrayFilmesPopulares", $array[0], time() + 6, "/");
+setcookie("arrayTitulo", serialize($arrayTitulo), time() + 6, "/");
+setcookie("arrayPoster", serialize($arrayPoster), time() + 6, "/");
 
 
 

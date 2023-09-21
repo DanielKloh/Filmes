@@ -436,7 +436,10 @@ display: flex;
 
 .nomeFilme {
     color: #D93250;
+    background-color: #030F26;
+    border: none;
     transition: all 0.3s;
+    text-decoration: underline;
 }
 
 .nomeFilme:hover {

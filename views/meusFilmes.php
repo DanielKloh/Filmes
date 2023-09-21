@@ -17,30 +17,12 @@ require_once("layout/header.php");
     <h2 class="container mt-5 mb-5">Filmes que avaliei</h1>
 
         <div class="containerTabela">
+            <?php
 
-            <!-- <table class="" >
-                <thead class="text-center">
-                    <th class="cabesarioTabela">#</th>
-                    <th class="cabesarioTabela">Nome</th>
-                    <th class="cabesarioTabela">Avaliação</th>
-                    <th class="cabesarioTabela ultimaColuna">Ação</th>
-                </thead>
+            $filmes = unserialize($_COOKIE["filmes"]);
+            $avaliacoes = unserialize($_COOKIE["avaliacoes"]);
 
-                <tbody>
-                    <tr>
-                        <td class="corpoTabela"><strong>1</strong></td>
-                        <td class="corpoTabela"><a href="" class="nomeFilme">Batman cavaleiro das trevas </a></td>
-                        <td class="corpoTabela">Muito Bom</td>
-                        <td class="corpoTabela ultimaColuna">
-                            <div class="d-flex">
-                                <button class="btn btn-warning btnAcoes">Editar</button>
-                                <button class="btn btn-danger btnAcoes">Deletar</button>
-                            </div>
-                        </td>
-                    </tr>
-
-                </tbody>
-            </table> -->
+            ?>
 
             <table class="table">
                 <thead>
@@ -53,19 +35,67 @@ require_once("layout/header.php");
                 </thead>
 
                 <tbody>
+                    <?php
+                    for ($i = 0; $i < count($filmes); $i++) {
+
+                        echo '                   
                     <tr>
-                        <td class="corpoTabela" scropt="row">1</td>
-                        <td class="corpoTabela"><a href="#" class="nomeFilme"> Batman o cavaleiro das trevas</a></td>
-                        <td class="corpoTabela">Muito Bom</td>
+                        <td class="corpoTabela" scropt="row">' . $i + 1 . '</td>
+                        <td class="corpoTabela"><form action="./controller/FilmeViewController.php" method="POST">
+                        <input type="hidden" id="idFilme" name="tituloFilmeExisternte" value="' . $filmes[$i] . '">
+                        <button class="nomeFilme">' . $filmes[$i] . '</button>
+                        </form> </td>
+                        <td class="corpoTabela">' . $avaliacoes[$i] . '</td>
                         <td class="corpoTabela ultimaColuna">
-                            <a href="#" class="btn btn-warning  edit-btn">Editar</a>
-                            <button class="btn btn-danger delete-btn">Deletar</button>
-                            
-                        </td> 
-                    </tr>
-                    
+                        <button id="btn" type="button" class="btn btn-danger mt-4 " data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Deletar 
+                      </button>
+                        </td>
+                    </tr>';
+
+                    }
+
+                    ?>
+
+                    <script>
+                        function buscariId() {
+                            let idFilme = document.getElementById("idFilme");
+
+                           let dadosFilmeDeletar =document.getElementById("dadosFilmeDeletar");
+
+                           dadosFilmeDeletar.setAttribute("value", idFilme.value);
+                        }
+                    </script>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header" style="color: #000">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Deletar Comentario</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body" style="color: #000">
+                                    Tem certesa de que deseja deletar seu comentario?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-atualizar" data-bs-dismiss="modal"
+                                        >Cancelar</button>
+                                    <form action="./controller/ComentarioViewController.php" method="POST">
+                                        <?php
+                                        echo "<input type='hidden' name='dadosFilmeDeletar' id='dadosFilmeDeletar'>";
+                                        echo '<button type="submit" class="btn btn-primary" onclick="buscariId()">Deletar</button>'
+                                            ?>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </tbody>
-        </table>
+            </table>
 
 
         </div>
