@@ -6,16 +6,19 @@
                 <li class="">
                     <a class="nav-link" id="paginaInicio" href="./controller/HomeViewController.php">Inicio</a>
                 </li>
+                <?php 
+                if (isset($_SESSION["idUsuario"])) {
+                    echo '  
+                
                 <li class="">
                     <a class="nav-link" href="./controller/MeusFilmesViewController.php">Meus Filmes</a>
                 </li>
                 <li class="">
                     <a class="nav-link" href="./controller/PerfilViewController.php">Meu Perfil</a>
                 </li>
-                <?php
+          
                
-                if (isset($_SESSION["idUsuario"])) {
-                    echo '                
+                       
                 <li class="">
                 <form action="./controller/UsuarioViewController.php" method="POST">
                     <input type="hidden" name="acao" value="deslogar">
@@ -49,29 +52,32 @@
             <li class="">
                 <a class="nav-link mb-4" id="paginaInicio" href="./controller/HomeViewController.php">Inicio</a>
             </li>
-            <li class="">
-                <a class="nav-link mb-4" href="./controller/PerfilViewController.php">Meus Filmes</a>
-            </li>
-            <li class="">
-                <a class="nav-link mb-4" href="perfil.php">Meu Perfil</a>
-            </li>
-            <?php
-
-            if (isset($_SESSION["idUsuario"])) {
-                echo '                
-<li class="">
-<form action="./controller/UsuarioViewController.php" method="POST">
-    <input type="hidden" name="acao" value="deslogar">
-    <button type="submit" class="nav-link">Sair</button>
-</form>
-</li>';
-            } else {
-                echo '
-<li class="">
-    <a class="nav-link" href="login.php">Entrar</a>
-</li>';
-            }
-            ?>
+            <?php 
+                if (isset($_SESSION["idUsuario"])) {
+                    echo '  
+                
+                <li class="">
+                    <a class="nav-link" href="./controller/MeusFilmesViewController.php">Meus Filmes</a>
+                </li>
+                <li class="">
+                    <a class="nav-link" href="./controller/PerfilViewController.php">Meu Perfil</a>
+                </li>
+          
+               
+                       
+                <li class="">
+                <form action="./controller/UsuarioViewController.php" method="POST">
+                    <input type="hidden" name="acao" value="deslogar">
+                    <button type="submit" class="nav-link">Sair</button>
+                </form>
+                </li>';
+                } else {
+                    echo '
+                <li class="">
+                    <a class="nav-link" href="login.php">Entrar</a>
+                </li>';
+                }
+                ?>
         </ul>
     </div>
 </div>

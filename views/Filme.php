@@ -7,15 +7,15 @@ require_once("layout/header.php");
 ?>
 
 <body>
-    <?php
+    <?php //Inicia sessão
+    session_start();
     //Chama a navbar
     require_once("layout/navbar.php");
     ?>
 
     <?php
 
-    //Inicia sessão
-    session_start();
+
 
 
     // Recupera a string serializada do cookie
@@ -172,9 +172,10 @@ require_once("layout/header.php");
                 //Mostra que o usuario não esta logado
                 echo "<h3> Comentario </h3>";
             }
-            ?>
 
-            <select id="avaliacao" name="avaliacao" class="selecionar text-center" style="width: 150px;">
+
+            if (isset($_SESSION["idUsuario"])) {
+                echo '<select id="avaliacao" name="avaliacao" class="selecionar text-center" style="width: 150px;">
                 <option selected value="selecionar">Selecionar</option>
                 <option value="Muito Ruim">Muito Ruim</option>
                 <option value="Ruim">Ruim</option>
@@ -182,98 +183,46 @@ require_once("layout/header.php");
                 <option value="Bom">Bom</option>
                 <option value="Muito Bom">Muito Bom</option>
             </select>
-        </div>
+        </div>';
 
-        <?php
 
-        if (isset($_COOKIE["usuarioComentou"]) && $_COOKIE["usuarioComentou"] == "false") {
-            echo '        <textarea id="texto" class="form-control textoComentario" placeholder="Comentario"
+
+                if (isset($_COOKIE["usuarioComentou"]) && $_COOKIE["usuarioComentou"] == "false") {
+                    echo '        <textarea id="texto" class="form-control textoComentario" placeholder="Comentario"
 style="height: 100px"></textarea>';
-        } else {
-            $comentario = unserialize($_COOKIE["dadosComentarioUsuarioAtual"]);
-            echo '        <textarea id="texto" class="form-control textoComentario" placeholder="Comentario"
+                } else {
+                    $comentario = unserialize($_COOKIE["dadosComentarioUsuarioAtual"]);
+                    echo '        <textarea id="texto" class="form-control textoComentario" placeholder="Comentario"
     style="height: 100px">' . $comentario . '</textarea>
     
     <input type="hidden" name="atualizarComentario" value"' . $_COOKIE['dadosComentarioUsuarioAtual'] . '">
     ';
-
-        }
-
-        ?>
-        <script>
-
-
-            let textarea = document.getElementById("texto");
-
-            function popularInput() {
-
-                let texto = textarea.value;
-
-                let input = document.getElementById("input");
-
-                input.setAttribute("value", texto);
-            }
-
-            function contarCaractere(comentario) {
-
-                if (comentario.length > 270) {
-                    return false;
-                }
-                else {
-                    return true;
                 }
 
-            }
-
-            function verificarAvaliacao() {
-
-                let avaliacao = document.getElementById("avaliacao");
 
 
-                let caracteres = contarCaractere(textarea.value);
 
-                if (caracteres === false) {
-                    alert("Você exedeou o limite de caracteres do seu comentario");
-                }
-
-                else if (avaliacao.value === "selecionar") {
-                    alert("Preencha o campo avaliação");
+                echo '<input type="hidden" name="comentario" id="input">';
 
 
+                if (isset($dadosFilme)) {
+                    echo "<input type='hidden' value='" . json_encode($dadosFilme) . "' name='dadosFilme' id='dadosFilme'>";
                 } else {
-                    let btn = document.getElementById("btn");
-
-                    btn.setAttribute("type", "submit");
-                    popularInput();
+                    echo "<input type='hidden' value='" . json_encode($dadosFilmeExistente) . "' name='dadosFilme' id='dadosFilme'>";
                 }
 
-            }
 
-        </script>
+                if (isset($_COOKIE["usuarioComentou"]) && $_COOKIE["usuarioComentou"] == "false") {
 
-        <input type="hidden" name="comentario" id="input">
-
-        <!-- Manda os dados do fime para a controller para futuro cadastro de filme -->
-        <?php
-
-        if (isset($dadosFilme)) {
-            echo "<input type='hidden' value='" . json_encode($dadosFilme) . "' name='dadosFilme' id='dadosFilme'>";
-        } else {
-            echo "<input type='hidden' value='" . json_encode($dadosFilmeExistente) . "' name='dadosFilme' id='dadosFilme'>";
-        }
-
-
-        if (isset($_COOKIE["usuarioComentou"]) && $_COOKIE["usuarioComentou"] == "false") {
-
-            echo '<button id="btn" type="button" class="btn btn-primary mt-4" onclick="verificarAvaliacao()">Comentar</button>';
-        } else {
-            echo '<button id="btn" type="button" class="btn btn-atualizar mt-4" onclick="verificarAvaliacao()">Atualizar</button>';
-            echo '<button id="btn" type="button" class="btn btn-primary mt-4 " data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    echo '<button id="btn" type="button" class="btn btn-primary mt-4" onclick="verificarAvaliacao()">Comentar</button>';
+                } else {
+                    echo '<button id="btn" type="button" class="btn btn-atualizar mt-4" onclick="verificarAvaliacao()">Atualizar</button>';
+                    echo '<button id="btn" type="button" class="btn btn-primary mt-4 " data-bs-toggle="modal" data-bs-target="#exampleModal">
             Deletar 
           </button>';
-        }
-
-        ?>
+                }
+            }
+            ?>
 
     </form>
 
@@ -338,7 +287,7 @@ style="height: 100px"></textarea>';
         </div>';
         }
     }
-
+    echo "</div>";
     ?>
 
 
@@ -348,10 +297,9 @@ style="height: 100px"></textarea>';
 
     ?>
 
+    <script src="./scripts/filme.js">
 
-
-
-
+    </script>
 
 </body>
 

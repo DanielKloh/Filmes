@@ -9,6 +9,7 @@ require_once("layout/header.php");
 <body>
 
     <?php
+    session_start();
     //Chama a navbar
     require_once("layout/navbar.php");
 
@@ -19,26 +20,38 @@ require_once("layout/header.php");
         <div class="containerTabela">
             <?php
 
+
+
+
             $filmes = unserialize($_COOKIE["filmes"]);
             $avaliacoes = unserialize($_COOKIE["avaliacoes"]);
+
+
+            $qtd = count($filmes);
+
 
             ?>
 
             <table class="table">
-                <thead>
+
+
+                <tbody>
+                    <?php
+
+
+
+                    if ($qtd > 0) {
+                    echo'                <thead>
                     <tr>
                         <th class="cabesarioTabela" scope="col"> <strong>#<strong></th>
                         <th class="cabesarioTabela" scope="col"> <strong>Nome<strong></th>
                         <th class="cabesarioTabela" scope="col"> <strong>Avaliação<strong></th>
                         <th class="cabesarioTabela ultimaColuna" scope="col"> <strong>Ações<strong></th>
                     </tr>
-                </thead>
+                </thead>    ';
+                        for ($i = 0; $i < $qtd; $i++) {
 
-                <tbody>
-                    <?php
-                    for ($i = 0; $i < count($filmes); $i++) {
-
-                        echo '                   
+                            echo '                   
                     <tr>
                         <td class="corpoTabela" scropt="row">' . $i + 1 . '</td>
                         <td class="corpoTabela"><form action="./controller/FilmeViewController.php" method="POST">
@@ -53,54 +66,17 @@ require_once("layout/header.php");
                         </td>
                     </tr>';
 
+                        }
+                    } else {
+                        echo "<div class='footer-margin'> Você ainda não avaliou nenhum filme</div>";
                     }
 
                     ?>
-
-                    <script>
-                        function buscariId() {
-                            let idFilme = document.getElementById("idFilme");
-
-                           let dadosFilmeDeletar =document.getElementById("dadosFilmeDeletar");
-
-                           dadosFilmeDeletar.setAttribute("value", idFilme.value);
-                        }
-                    </script>
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header" style="color: #000">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Deletar Comentario</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body" style="color: #000">
-                                    Tem certesa de que deseja deletar seu comentario?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-atualizar" data-bs-dismiss="modal"
-                                        >Cancelar</button>
-                                    <form action="./controller/ComentarioViewController.php" method="POST">
-                                        <?php
-                                        echo "<input type='hidden' name='dadosFilmeDeletar' id='dadosFilmeDeletar'>";
-                                        echo '<button type="submit" class="btn btn-primary" onclick="buscariId()">Deletar</button>'
-                                            ?>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </tbody>
             </table>
 
 
         </div>
-
-
 
 
 
@@ -128,6 +104,9 @@ require_once("layout/header.php");
         require_once("layout/footer.php");
 
         ?>
+
+
+        <script src="./scripts/meusFilmes.js"></script>
 
 </body>
 

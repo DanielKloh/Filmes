@@ -7,12 +7,27 @@ session_start();
 include_once $_SERVER['DOCUMENT_ROOT'] . '/filmes/controller/FilmeController.php';
 
 
+//função que remove o " ' " do retorno da API
+function adicionarAspasSimplesDeObjeto($objeto)
+{
 
+    //verifica se é um objeto
+
+
+        //Percorre o objeto substituindo as " ' " por " + "
+        foreach ($objeto as $propriedade => $valor) {
+            if (is_string($valor)) {
+                $objeto->$propriedade = str_replace("+", "", $valor);
+            }
+        }
+    
+    return $objeto;
+}
 
 $filme = new Filme();
 
 if (isset($_POST["tituloFilmeExisternte"])) {
-    
+
     //Armazena o id do filme para posterior usu em diversos métodos
     $idFilme = $filme->pegarIdFilme($_POST["tituloFilmeExisternte"]);
 
@@ -20,14 +35,15 @@ if (isset($_POST["tituloFilmeExisternte"])) {
 } else {
 
     //converter os dados do json para um array
-    $dadosFilme = json_decode($_POST["dadosFilme"]);
-    
+    $dadosFilme = adicionarAspasSimplesDeObjeto(json_decode($_POST["dadosFilme"]));
+
+
     //Armazena o nome do filme para posterior uso em diversos métodos
     $titulo = $dadosFilme->Title;
 
     //Armazena o id do filme para posterior usu em diversos métodos
     $idFilme = $filme->pegarIdFilme($titulo);
-    
+
     //Monta um array com os dados do filme
     $arrayFilme = $filme->arrayFilme($dadosFilme);
 }

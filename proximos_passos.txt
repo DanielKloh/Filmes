@@ -10,8 +10,10 @@
 
 //cadastrar usuario
 
-ajeitar a navbar, footer e o layout da home
+//ajeitar a navbar, footer e o layout da home
 
 esqueceu a senha
 
 barra de pesuisa funcional com js
+
+delete da tela de dashboard

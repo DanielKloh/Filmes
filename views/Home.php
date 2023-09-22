@@ -14,14 +14,6 @@ require_once("layout/header.php");
     require_once("layout/navbar.php");
 
 
-    if (isset($_SESSION["idUsuario"])) {
-        echo $_SESSION["idUsuario"];
-    } else {
-        echo "Deslogado";
-    }
-
-
-
     ?>
 
 
@@ -93,7 +85,7 @@ require_once("layout/header.php");
                 </div>
             </div>";
         } else {
-            $containerImagem = "Nenhum Filme Encontrado";
+            echo "<div class='footer-margin'> Nenhum filme avaliadao</div>";
         }
         echo $containerImagem;
 
@@ -114,20 +106,25 @@ require_once("layout/header.php");
         $arrayTitulosSemBarra = removerBarraInvertida($arrayTitulos);
         $arrayPosterSemBaraa = removerBarraInvertida($arrayPoster);
 
-        var_dump($arrayTitulosSemBarra);
 
 
-
-
-        $qtdFilmes = count($arrayPosterSemBaraa)/4;
+        
+        
+        $qtdFilmes = count($arrayPosterSemBaraa);
+        
         $count = 0;
-        for ($i = 0; $i < count($arrayPosterSemBaraa); $i++) {
+
+        for ($i = 0; $i < ceil($qtdFilmes/4); $i++) {
 
             echo '<div class="container  containerCard">';
 
-            for ($j = 0; $j < $qtdFilmes; $j++) {
+            for ($j = 0; $j < 4 ; $j++) {
+
+                  if($count == $qtdFilmes){
+                        break;
+                    }
                 echo '
-                    <div class="card"  >
+                    <div class="card">
                     <img src="' . $arrayPosterSemBaraa[$count] . '" class="card-img-top" alt="capa do filme">
                             <div class="card-body text-center">
                                 <form method="POST" action="./controller/FilmeViewController.php">
@@ -136,6 +133,7 @@ require_once("layout/header.php");
                                 </form>
                             </div>
                     </div>';
+                  
                     $count ++;
             }
 

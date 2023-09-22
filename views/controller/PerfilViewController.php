@@ -6,7 +6,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/filmes/controller/UsuarioController.p
 
 
 $usuario = new Usuario();
-if(isset($_SESSION["idUsuario"])){    
+   
  
     $dados = $usuario->buscarDados($_SESSION["idUsuario"]);
 
@@ -17,12 +17,8 @@ if(isset($_SESSION["idUsuario"])){
     $dadosUsuario = serialize($arrayDadosUsuario);
 
 
-}
-else{
-    $outro = "x";
-    $arrayDadosUsuario = ["nome"=>$outro, "email"=>$outro,"genero"=>$outro,
-    "dataNascimento"=>$outro,"telefone"=>$outro];
-}
+
+
 
 $dadosUsuario = serialize($arrayDadosUsuario);
 
