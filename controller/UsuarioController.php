@@ -1,4 +1,5 @@
 <?php
+
 include_once $_SERVER['DOCUMENT_ROOT'] . '/filmes/model/conexao.php';
 
 class Usuario
@@ -45,7 +46,7 @@ class Usuario
         $genero = $array['genero'];
         $dataNascimento = $array["dataNascimento"];
 
-        $insert = "INSERT INTO usuario VALUES (null,'$nome', '$email', '$senha',$telefone,'$genero','$dataNascimento')";
+        $insert = "INSERT INTO usuario VALUES (null,'$nome', '$email', '$senha',null,$telefone,'$genero','$dataNascimento')";
 
         $obj_conexao->query($insert);
 
@@ -167,6 +168,60 @@ class Usuario
 
 
 
+    public function dadosUsuario($email)
+    {
+        //Conexao com o banco de dados
+        $conexao = new Sql();
+        $obj_conexao = $conexao->conectar();
+
+        $consulta = "SELECT * FROM usuario WHERE email = '$email' LIMIT 1";
+
+        $resultado = mysqli_query($obj_conexao, $consulta);
+
+        $data = array();
+
+        while ($row = mysqli_fetch_assoc($resultado)) {
+            $data = $row;
+        }
+
+
+        if (isset($data["nome"])) {
+            $id = $data["id"];
+            $_SESSION["msg"] = "Usuario encontrado olha ele ai: " . $data["nome"];
+        } else {
+            $id = null;
+            $_SESSION["msg"] = "deu pau";
+            return;
+        }
+
+        return $data;
+    }
+
+
+    public function UpdaterChaveSenha($chave, $id)
+    {
+
+        $conexao = new Sql();
+        $obj_conexao = $conexao->conectar();
+
+        $update = "UPDATE usuario SET  chaveRecuperarSnha = '$chave' WHERE id = $id";
+
+        $obj_conexao->query($update);
+
+        return true;
+
+    }
+
+    public function atualizarSenha($senha, $id)
+    {
+        $conexao = new Sql();
+        $obj_conexao = $conexao->conectar();
+
+        $update = "UPDATE usuario SET senha = '$senha' WHERE id = $id";
+        $obj_conexao->query($update);
+        return true;
+
+    }
 
 
 
