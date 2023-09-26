@@ -70,6 +70,13 @@ input {
     background-color: #D93250 !important;
 }
 
+.recuperarSenha{
+    color: #D9D9D9;
+    transition: all .3s;
+}
+.recuperarSenha:hover {
+    color: #D93250 !important;
+}
 
 
 /* Navbar */

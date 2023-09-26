@@ -174,27 +174,27 @@ class Usuario
         $conexao = new Sql();
         $obj_conexao = $conexao->conectar();
 
-        $consulta = "SELECT * FROM usuario WHERE email = '$email' LIMIT 1";
+        $consulta = "SELECT id FROM usuario WHERE email = '$email' LIMIT 1";
 
         $resultado = mysqli_query($obj_conexao, $consulta);
 
-        $data = array();
+       
 
         while ($row = mysqli_fetch_assoc($resultado)) {
-            $data = $row;
+            $id = $row['id'];
         }
 
 
-        if (isset($data["nome"])) {
-            $id = $data["id"];
-            $_SESSION["msg"] = "Usuario encontrado olha ele ai: " . $data["nome"];
+        if (isset($id)) {
+
+            $_SESSION["msg"] = "Usuario encontrado";
         } else {
-            $id = null;
+
             $_SESSION["msg"] = "deu pau";
             return;
         }
 
-        return $data;
+        return $id;
     }
 
 
@@ -217,8 +217,10 @@ class Usuario
         $conexao = new Sql();
         $obj_conexao = $conexao->conectar();
 
-        $update = "UPDATE usuario SET senha = '$senha' WHERE id = $id";
+        $update = "UPDATE usuario SET senha = '$senha' WHERE id = $id   ";
         $obj_conexao->query($update);
+        ($obj_conexao->query($update));
+        
         return true;
 
     }

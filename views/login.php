@@ -8,9 +8,6 @@ require_once("layout/header.php");
 ?>
 
 <body>
-
-    <h1 class="titulo">Login</h1>
-
     <?php
 
     if (isset($_COOKIE["erroLogin"])) {
@@ -21,11 +18,14 @@ require_once("layout/header.php");
     }
 
     ?>
+    <h1 class="titulo">Login</h1>
+
+
 
     <div class="containerLogin">
 
         <form action="./controller/UsuarioViewController.php" method="POST"
-            class="container containerLogin needs-validation">
+            class="container containerLogin needs-validation ">
             <div class="formulario">
                 <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
                 <div class="col-md-12">
@@ -38,7 +38,10 @@ require_once("layout/header.php");
                     <input type="password" class="form-control" id="inputPassword3" name="password" required>
                 </div>
             </div>
+            <div class="text-center mt-3">
 
+                <a href="recuperarSenha.php" class="recuperarSenha"> Esqueceu a senha</a>
+            </div>
             <div class="botaoFormulario">
                 <input type="hidden" name="acao" value="login">
                 <a href="cadastro.php" class="btn btn-primary mb-3">Cadastrar</a>
@@ -49,7 +52,7 @@ require_once("layout/header.php");
 
     </div>
 
-    <a href="recuperarSenha.php"> Esqueceu a senha</a>
+
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"

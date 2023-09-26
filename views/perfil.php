@@ -27,7 +27,7 @@ if($dadosUsuario["nome"] == "x"){
  $botoes = "";
 }
 else $botoes = '            <a class="btn btn-primary" href="editarDados.php">Editar Dados</a>
-<a href="AlterarSenha.php" class="btn btn-primary">Alterar Senha</a>';
+<a href="recuperarSenha.php" class="btn btn-primary">Alterar Senha</a>';
     ?>
 
 
