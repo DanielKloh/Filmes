@@ -134,13 +134,9 @@ require_once("layout/header.php");
 
     echo $filmeConteiner;
 
-    ?>
-
-
-    <h2 class="tituloComentario">Conmentarios</h2>
-
-
-    <?php
+    if (isset($_SESSION['idUsuario'])) {
+        echo '<h2 class="tituloComentario">Conmentarios</h2>';
+    }
 
     $usuarioComentou = false;
 
@@ -170,7 +166,7 @@ require_once("layout/header.php");
 
             } else {
                 //Mostra que o usuario não esta logado
-                echo "<h3> Comentario </h3>";
+                echo "<h3> Comentario: </h3>";
             }
 
 
@@ -223,7 +219,7 @@ style="height: 100px"></textarea>';
                 }
             }
             ?>
-
+        </div>
     </form>
 
 

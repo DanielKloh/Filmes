@@ -98,6 +98,8 @@ input {
 .nav-link {
     color: #000;
     transition: all 0.4s;
+    text-align: right;
+    width: 100%;
 }
 
 .nav-link:hover {
@@ -389,18 +391,15 @@ display: flex;
 
 
 /* footer */
+footer{
+    background-color: rgb(44, 44, 44);
+}
 .footerContainer {
     position: fixed end;
-
-
-
-
-
-    padding: 10px;
     margin-top: 60px;
     width: 100%;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 22px;
+    padding-bottom: 22px;
     text-align: center;
     background-color: rgb(44, 44, 44);
 }
@@ -467,6 +466,9 @@ display: flex;
 .nomeFilme:hover {
     color: #ededed;
 }
+
+
+
 
 @media only screen and (max-width: 991px) {
 

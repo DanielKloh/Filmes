@@ -1,8 +1,8 @@
 
-function buscariId() {
-    let idFilme = document.getElementById("idFilme");
+//  function buscarTitulo(titulo) {
 
-    let dadosFilmeDeletar = document.getElementById("dadosFilmeDeletar");
+ 
+//     let dadosFilmeDeletar = document.getElementById("dadosFilmeDeletar");
 
-    dadosFilmeDeletar.setAttribute("value", idFilme.value);
-}
+//     dadosFilmeDeletar.setAttribute("value", titulo);
+// }

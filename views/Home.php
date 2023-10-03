@@ -29,8 +29,6 @@ require_once("layout/header.php");
 
     <?php
 
-
-
     if (isset($_POST["titulo"])) {
 
         // converte nesse formato "Land+of+the+Lost";

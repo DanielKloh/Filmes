@@ -38,16 +38,16 @@ $dadosUsuario = unserialize($_COOKIE["dadosUsuario"]);
 
                 <p>Genero</p>
                 <div class="form-check form-check-inline">
-                    <?php echo '<input type="radio" value="' . $dadosUsuario["genero"] . '" name="genero" class="form-check-input" id="inputEmail4" placeholder="Telefone*" required>' ?>
+                    <?php echo '<input type="radio" value="mascolino" name="genero" class="form-check-input" id="inputEmail4" placeholder="Telefone*" required>' ?>
                     <label class="form-check-label" for="inlineRadio1">Mascolino</label>
                 </div>
                 <div class="form-check form-check-inline">
 
-                    <?php echo '<input type="radio" value="' . $dadosUsuario["genero"] . '" name="genero" class="form-check-input" id="inputEmail4" placeholder="Telefone*" required>' ?>
+                    <?php echo '<input type="radio" value="feminino" name="genero" class="form-check-input" id="inputEmail4" placeholder="Telefone*" required>' ?>
                     <label class="form-check-label" for="inlineRadio2">Feminino</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <?php echo '<input type="radio" value="' . $dadosUsuario["genero"] . '" name="genero" class="form-check-input" id="inputEmail4" placeholder="Telefone*" required>' ?>
+                    <?php echo '<input type="radio" value="outro" name="genero" class="form-check-input" id="inputEmail4" placeholder="Telefone*" required>' ?>
 
                     <label class="form-check-label" for="inlineRadio3">Outro</label>
                 </div>

@@ -66,7 +66,7 @@
                
                        
                 <li class="">
-                <form action="./controller/UsuarioViewController.php" method="POST">
+                <form action="./controller/UsuarioViewController.php" method="POST" class="nav-link">
                     <input type="hidden" name="acao" value="deslogar">
                     <button type="submit" class="nav-link">Sair</button>
                 </form>

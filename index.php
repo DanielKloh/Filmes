@@ -1,7 +1,7 @@
 <?php
 
 
-require_once("views/Home.php");
+include_once("views/controller/HomeViewController.php");
 
 
 ?>
