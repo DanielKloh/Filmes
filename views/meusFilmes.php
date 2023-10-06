@@ -102,6 +102,7 @@ function buscarTitulo(titulo) {
                     <div class="modal-body" style="color: #000">
                         Tem certesa de que deseja apagar este comentario?
                     </div>
+                    <a href="" target=""></a>
                     <form action="./controller/ComentarioViewController.php" method="POST" class="modal-footer">
                         <input type="hidden" name="dadosFilmeDeletar" id="dadosFilmeDeletar">
                         <button type="button" class="btn btn-atualizar" data-bs-dismiss="modal">Cancelar</button>
