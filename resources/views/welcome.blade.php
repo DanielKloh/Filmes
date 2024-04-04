@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -136,5 +137,9 @@
                 </div>
             </div>
         </div>
+        
+<div class="container">
+    <button class="btn btn-danger">cc</button>
+</div>
     </body>
 </html>
